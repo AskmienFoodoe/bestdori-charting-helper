@@ -1,5 +1,8 @@
-import React, { Fragment } from 'react'
-import { Grid, Segment, Header, Form, TextArea } from 'semantic-ui-react'
+import React, { FormEvent } from 'react'
+import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
+
+import Operations from './Operations'
+import { Chart } from '../common/Chart'
 
 
 
@@ -10,43 +13,56 @@ class App extends React.Component {
     }
 
     state = {
+        inputChart: '',
+        outputChart: '',
+    }
 
+    onInputChange = (event: Event, {value} : {value: string}) => {
+        this.setState({ inputChart: value })
+    }
+
+    onSubmit = (event: FormEvent) => {
+        let inputChartAsJson = JSON.parse(this.state.inputChart)
+        console.log(inputChartAsJson)
+        let inputChartAsChart = new Chart(inputChartAsJson)
+        this.setState({outputChart: JSON.stringify(inputChartAsChart.chartElements)})
     }
 
     render() {
 
         return (
-            <Fragment>
-                <Grid columns={3} textAlign='center' style={{ height: '100vh' }} verticalAlign='middle' centered>
+            <Form onSubmit={this.onSubmit}>
+                <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px' }} verticalAlign='middle' centered>
                     <Grid.Column>
-                        <TextArea float />
-                    </Grid.Column>
-                    <Grid.Column>
-                        <Header color='grey' textAlign='center' style={{ fontSize: "60px", letterSpacing: "4.8px" }}>
-                            Course Scheduler
-                    </Header>
-                        <Header as='h4' color='grey' textAlign='center'>
-                            Please Enter Your NetID
-                    </Header>
-                        <Segment clearing raised style={{ borderColor: "white" }}>
-                            <Form size='mini'>
-                                <Form.Input
-                                    fluid
-                                    placeholder='netid'
-                                />
-                                <Form.Button color='violet' size='small' fluid>
-                                    Enter
-                            </Form.Button>
-
-                            </Form>
-
+                        <Segment>
+                            <Form.Field
+                                style={{minHeight: '300px'}}
+                                control={TextArea}
+                                value={this.state.inputChart}
+                                onChange={this.onInputChange}
+                                placeholder='Chart source code goes here...'
+                            />
                         </Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        <TextArea float />
+                        <Segment style={{textAlign: 'center'}}>
+                            <Operations />
+                            <Form.Button content='Do It'/>
+                        </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                        <Segment>
+                            <Form.Field 
+                                style={{minHeight: '300px'}}
+                                control={TextArea} 
+                                readOnly 
+                                value={this.state.outputChart}
+                                placeholder='Transformed chart source code appears here!'
+                            />
+                        </Segment>
                     </Grid.Column>
                 </Grid>
-            </Fragment>
+            </Form>
         )
     }
 }
