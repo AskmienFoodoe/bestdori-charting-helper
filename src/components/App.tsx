@@ -4,6 +4,7 @@ import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 import Operations from './Operations'
 import { Chart } from '../common/Chart'
 import RangeSelector from './selectors/RangeSelector'
+import PositionSelector from './selectors/PositionSelector'
 
 
 
@@ -49,6 +50,7 @@ class App extends React.Component {
                         <Segment style={{textAlign: 'center'}}>
                             <Operations />
                             <RangeSelector />
+                            <PositionSelector />
                             <Form.Button content='Do It'/>
                         </Segment>
                     </Grid.Column>

@@ -20,3 +20,9 @@ export enum RangeSelectorOption {
     Beat = 'Beat',
     //Prev = 'Prev'
 }
+
+export enum PositionSelectorOption {
+    Note = 'Note',
+    Beat = 'Beat',
+    Relative = 'Relative'
+}

@@ -33,16 +33,18 @@ export default class RangeSelector extends React.Component<propsType, stateType>
 
     handleMinChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
         let minValue = +data.value
+        if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
+            minValue = Math.round(minValue)
+        }
         this.setState({ min: minValue })
-
-
     }
 
     handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
         let maxValue = +data.value
+        if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
+            maxValue = Math.round(maxValue)
+        }
         this.setState({ max: maxValue })
-
-
     }
 
     fixMaxtoMin = () => {
@@ -69,6 +71,7 @@ export default class RangeSelector extends React.Component<propsType, stateType>
                 <Input
                     style={{ width: '80px' }}
                     type='number'
+                    min={0}
                     value={this.state.min}
                     onChange={this.handleMinChange}
                     onBlur={this.fixMaxtoMin}
@@ -77,6 +80,7 @@ export default class RangeSelector extends React.Component<propsType, stateType>
                 <Input
                     style={{ width: '80px' }}
                     type='number'
+                    min={0}
                     value={this.state.max}
                     onChange={this.handleMaxChange}
                     onBlur={this.fixMintoMax}
