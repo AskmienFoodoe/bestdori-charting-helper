@@ -3,6 +3,7 @@ import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 
 import Operations from './Operations'
 import { Chart } from '../common/Chart'
+import RangeSelector from './selectors/RangeSelector'
 
 
 
@@ -33,7 +34,7 @@ class App extends React.Component {
         return (
             <Form onSubmit={this.onSubmit}>
                 <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px' }} verticalAlign='middle' centered>
-                    <Grid.Column>
+                    <Grid.Column style={{minWidth: '300px'}}>
                         <Segment>
                             <Form.Field
                                 style={{minHeight: '300px'}}
@@ -44,13 +45,14 @@ class App extends React.Component {
                             />
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column style={{minWidth: '450px'}}>
                         <Segment style={{textAlign: 'center'}}>
                             <Operations />
+                            <RangeSelector />
                             <Form.Button content='Do It'/>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column style={{minWidth: '300px'}}>
                         <Segment>
                             <Form.Field 
                                 style={{minHeight: '300px'}}

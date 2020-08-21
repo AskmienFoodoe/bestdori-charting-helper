@@ -13,7 +13,8 @@ export class Chart {
                 if (note.note == NoteType.Single) {
                     return new SingleNote(note)
                 } else if (note.note == NoteType.Slide) {
-                    return new SlideNote(note)
+                    let slideNote = note as SlideNote
+                    return new SlideNote(slideNote)
                 }
             } else if (element.type == ChartElementType.System) {
                 let bpmMarker = element as BpmMarker

@@ -1,4 +1,4 @@
-import { NoteLane, NoteType, ChartElementType } from "./enums";
+import { NoteLane, NoteType, ChartElementType, SlideNotePos } from "./enums";
 import { ChartElement } from "./ChartElement";
 
 export interface Note extends ChartElement {
@@ -32,16 +32,18 @@ export class SlideNote implements Note {
 
     type: ChartElementType = ChartElementType.Note
     lane: NoteLane
-    note: NoteType = NoteType.Single
+    note: NoteType = NoteType.Slide
     beat: number
     flick: boolean
+    pos: SlideNotePos
     start: boolean
     end: boolean
 
-    constructor({lane, beat, flick = false, start = false, end = false}: {lane: NoteLane, beat: number, flick?: boolean, start?: boolean, end?: boolean}) {
+    constructor({lane, beat, flick = false, pos, start = false, end = false}: {lane: NoteLane, beat: number, flick?: boolean, pos: SlideNotePos, start?: boolean, end?: boolean}) {
         this.lane = lane
         this.beat = beat
         this.flick = flick
+        this.pos = pos
         this.start = start
         this.end = end
 

@@ -1,11 +1,22 @@
-export enum NoteType {
-    Single = 'Single',
-    Slide = 'Slide'
-}
-
 export enum ChartElementType {
     System = 'System',
     Note = 'Note'
 }
 
+export enum NoteType {
+    Single = 'Single',
+    Slide = 'Slide'
+}
+
 export type NoteLane = 1|2|3|4|5|6|7
+
+export enum SlideNotePos {
+    A = 'A',
+    B = 'B'
+}
+
+export enum RangeSelectorOption {
+    Note = 'Note',
+    Beat = 'Beat',
+    //Prev = 'Prev'
+}
