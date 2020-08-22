@@ -10,8 +10,8 @@ const options = [
 
 type stateType = {
     rangeSelectorOption: RangeSelectorOption,
-    min: number,
-    max: number
+    start: number,
+    end: number
 }
 
 type propsType = {
@@ -20,42 +20,42 @@ type propsType = {
 
 export default class RangeSelector extends React.Component<propsType, stateType> {
 
-    //TODO: set Chart min/maxes as Context
+    //TODO: set Chart start/end as Context
     state = {
         rangeSelectorOption: RangeSelectorOption.Note,
-        min: 0,
-        max: 0
+        start: 0,
+        end: 0
     }
 
     handleOptionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
         this.setState({ rangeSelectorOption: data.value as RangeSelectorOption })
     }
 
-    handleMinChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-        let minValue = +data.value
+    handleStartChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+        let startValue = +data.value
         if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
-            minValue = Math.round(minValue)
+            startValue = Math.round(startValue)
         }
-        this.setState({ min: minValue })
+        this.setState({ start: startValue })
     }
 
-    handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-        let maxValue = +data.value
+    handleEndChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+        let endValue = +data.value
         if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
-            maxValue = Math.round(maxValue)
+            endValue = Math.round(endValue)
         }
-        this.setState({ max: maxValue })
+        this.setState({ end: endValue })
     }
 
-    fixMaxtoMin = () => {
-        if (this.state.min > this.state.max) {
-            this.setState({ max: this.state.min })
+    fixEndtoStart = () => {
+        if (this.state.start > this.state.end) {
+            this.setState({ end: this.state.start })
         }
     }
 
-    fixMintoMax = () => {
-        if (this.state.min > this.state.max) {
-            this.setState({ min: this.state.max })
+    fixStarttoEnd = () => {
+        if (this.state.start > this.state.end) {
+            this.setState({ start: this.state.end })
         }
     }
 
@@ -71,19 +71,19 @@ export default class RangeSelector extends React.Component<propsType, stateType>
                 <Input
                     style={{ width: '80px' }}
                     type='number'
-                    min={0}
-                    value={this.state.min}
-                    onChange={this.handleMinChange}
-                    onBlur={this.fixMaxtoMin}
+                    start={0}
+                    value={this.state.start}
+                    onChange={this.handleStartChange}
+                    onBlur={this.fixEndtoStart}
                 />
                 <Label style={{ fontSize: '16px' }} basic>to</Label>
                 <Input
                     style={{ width: '80px' }}
                     type='number'
-                    min={0}
-                    value={this.state.max}
-                    onChange={this.handleMaxChange}
-                    onBlur={this.fixMintoMax}
+                    start={0}
+                    value={this.state.end}
+                    onChange={this.handleEndChange}
+                    onBlur={this.fixStarttoEnd}
                 />
             </Form.Input>
         )
