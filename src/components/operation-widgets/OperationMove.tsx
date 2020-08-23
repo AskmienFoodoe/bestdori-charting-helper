@@ -18,7 +18,7 @@ type stateType = {
 export class OperationMove extends React.Component<propsType, stateType> {
 
     state = {
-        range: {start: 0, end: 0},
+        range: { start: 0, end: 0 },
         placementType: PlacementType.Place,
         position: 0
     }
@@ -40,7 +40,7 @@ export class OperationMove extends React.Component<propsType, stateType> {
             <Form.Input>
                 <RangeSelector onRangeChange={this.handleRangeChange} />
                 <Label style={{ fontSize: '16px' }} basic>and</Label>
-                <PlacementTypeSelector />
+                <PlacementTypeSelector onPlacementTypeChange={this.handlePlacementTypeChange} />
                 <Label style={{ fontSize: '16px' }} basic>at</Label>
                 <PositionSelector onPositionChange={this.handlePositionChange} rangeStart={this.state.range.start} />
             </Form.Input>

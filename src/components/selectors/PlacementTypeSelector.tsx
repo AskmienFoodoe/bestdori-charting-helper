@@ -9,7 +9,7 @@ const options = [
 ]
 
 type propsType = {
-
+    onPlacementTypeChange: (placementType: PlacementType) => void
 }
 
 type stateType = {
@@ -25,6 +25,12 @@ export default class PlacementTypeSelector extends React.Component<propsType, st
     handleOptionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
         let newPlacementType = data.value as PlacementType
         this.setState({ placementType: newPlacementType })
+    }
+
+    componentDidUpdate(prevProps: propsType, prevState: stateType) {
+        if (prevState.placementType !== this.state.placementType) {
+            this.props.onPlacementTypeChange(this.state.placementType)
+        }
     }
 
     render() {
