@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chart } from '../common/Chart';
 
-const ChartContext = React.createContext({} as IChartContextValue)
+const ChartContext = React.createContext({chart: new Chart([])} as IChartContextValue)
 
 type stateType = {
     chart: Chart

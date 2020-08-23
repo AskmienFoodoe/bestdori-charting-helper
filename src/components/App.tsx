@@ -3,9 +3,6 @@ import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 
 import Operations from './Operations'
 import { Chart } from '../common/Chart'
-import RangeSelector from './selectors/RangeSelector'
-import PositionSelector from './selectors/PositionSelector'
-import PlacementTypeSelector from './selectors/PlacementTypeSelector'
 import { OperationMove } from './operation-widgets/OperationMove'
 import ChartContext from '../contexts/ChartContext'
 
@@ -32,14 +29,11 @@ class App extends React.Component {
     updateChartInContext = () => {
         let inputChartAsJson = JSON.parse(this.state.inputChart)
         let inputChartAsChart = new Chart(inputChartAsJson)
-        console.log(this.context)
         this.context.updateChart(inputChartAsChart)
     }
 
     onSubmit = (event: FormEvent) => {
-        let inputChartAsJson = JSON.parse(this.state.inputChart)
-        let inputChartAsChart = new Chart(inputChartAsJson)
-        this.setState({outputChart: JSON.stringify(inputChartAsChart.chartElements)})
+        this.setState({outputChart: JSON.stringify(this.context.chart.chartElements)})
     }
 
     render() {

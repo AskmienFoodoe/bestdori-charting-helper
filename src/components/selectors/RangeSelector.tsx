@@ -1,6 +1,8 @@
 import React from 'react'
 import { Form, Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
 import { RangeSelectorOption } from '../../common/enums'
+import { Chart } from '../../common/Chart'
+import ChartContext from '../../contexts/ChartContext'
 
 const options = [
     { key: 'note', text: 'Notes', value: RangeSelectorOption.Note },
@@ -9,10 +11,11 @@ const options = [
 ]
 
 type propsType = {
-
+    onRangeChange: ({ start, end }: { start: number, end: number }) => void
 }
 
 type stateType = {
+    currentChart: Chart
     rangeSelectorOption: RangeSelectorOption,
     start: number,
     end: number
@@ -20,7 +23,11 @@ type stateType = {
 
 export default class RangeSelector extends React.Component<propsType, stateType> {
 
+    static contextType = ChartContext
+    context!: React.ContextType<typeof ChartContext>
+
     state = {
+        currentChart: new Chart([]),
         rangeSelectorOption: RangeSelectorOption.Note,
         start: 0,
         end: 0
@@ -58,6 +65,35 @@ export default class RangeSelector extends React.Component<propsType, stateType>
         }
     }
 
+    convertRangeToBeatRange(chart: Chart, rangeType: RangeSelectorOption, rangeStart: number, rangeEnd: number): { start: number, end: number } {
+        switch (rangeType) {
+            case RangeSelectorOption.Beat:
+                return { start: rangeStart, end: rangeEnd }
+            case RangeSelectorOption.Note:
+                const notes = chart.getNotes()
+                if (!notes.length) {
+                    return { start: 0, end: 0 }
+                }
+                const firstNoteIndex = Math.max(rangeStart - 1, 0)
+                const lastNoteIndex = Math.max(Math.min(rangeEnd - 1, notes.length - 1), 0)
+                return { start: notes[firstNoteIndex].beat, end: notes[lastNoteIndex].beat }
+        }
+    }
+
+    componentDidMount() {
+        this.setState({ currentChart: this.context.chart, end: this.context.chart.numNotes })
+    }
+
+    componentDidUpdate(prevProps: propsType, prevState: stateType) {
+        if (prevState.start !== this.state.start ||
+            prevState.end !== this.state.end ||
+            prevState.rangeSelectorOption !== this.state.rangeSelectorOption ||
+            this.context.chart !== this.state.currentChart) {
+            this.props.onRangeChange(this.convertRangeToBeatRange(this.context.chart, this.state.rangeSelectorOption, this.state.start, this.state.end))
+            this.setState({ currentChart: this.context.chart })
+        }
+    }
+
     render() {
         return (
             <>
@@ -71,6 +107,7 @@ export default class RangeSelector extends React.Component<propsType, stateType>
                     style={{ width: '80px' }}
                     type='number'
                     start={0}
+                    min={0}
                     value={this.state.start}
                     onChange={this.handleStartChange}
                     onBlur={this.fixEndtoStart}

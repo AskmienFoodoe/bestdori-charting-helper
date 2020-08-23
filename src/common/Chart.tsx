@@ -4,7 +4,9 @@ import { Note, SingleNote, SlideNote } from "./notes";
 import { BpmMarker } from "./BpmMarker";
 
 export class Chart {
+
     chartElements: ChartElement[]
+    numNotes: number
 
     constructor(chartElements: ChartElement[]) {
         this.chartElements = chartElements.map((element: ChartElement) => {
@@ -22,6 +24,7 @@ export class Chart {
             }
             return {} as ChartElement //Ripperino in Pepperino
         })
+        this.numNotes = this.getNotes().length
     }
 
     getNotes(): Note[] {
@@ -68,9 +71,9 @@ export class Chart {
             case PlacementType.Place:
                 break
             case PlacementType.Replace:
-                this.chartElements = this.chartElements.filter(element => element.type !== ChartElementType.Note
-                    || element.beat > beatPosition + range
-                    || element.beat < beatPosition)
+                this.chartElements = this.chartElements.filter(element => element.type !== ChartElementType.Note ||
+                                                                          element.beat > beatPosition + range || 
+                                                                          element.beat < beatPosition)
                 break
             //Insert DOES also displace BPM Markers
             case PlacementType.Insert:
