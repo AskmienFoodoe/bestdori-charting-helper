@@ -5,6 +5,7 @@ import Operations from './Operations'
 import { Chart } from '../common/Chart'
 import RangeSelector from './selectors/RangeSelector'
 import PositionSelector from './selectors/PositionSelector'
+import PlacementTypeSelector from './selectors/PlacementTypeSelector'
 
 
 
@@ -51,6 +52,7 @@ class App extends React.Component {
                             <Operations />
                             <RangeSelector />
                             <PositionSelector />
+                            <PlacementTypeSelector />
                             <Form.Button content='Do It'/>
                         </Segment>
                     </Grid.Column>

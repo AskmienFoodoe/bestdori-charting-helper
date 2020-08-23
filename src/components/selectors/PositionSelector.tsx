@@ -1,11 +1,11 @@
 import React from 'react'
 import { Form, Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
-import { RangeSelectorOption, PositionSelectorOption } from '../../common/enums'
+import { PositionSelectorOption } from '../../common/enums'
 
 const options = [
     { key: 'note', text: 'Note', value: PositionSelectorOption.Note },
     { key: 'beat', text: 'Beat', value: PositionSelectorOption.Beat },
-    { key: 'relative', text: 'Rel.', value: PositionSelectorOption.Relative }
+    { key: 'relative', text: 'ΔBeat', value: PositionSelectorOption.Relative }
 ]
 
 type stateType = {

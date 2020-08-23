@@ -26,3 +26,9 @@ export enum PositionSelectorOption {
     Beat = 'Beat',
     Relative = 'Relative'
 }
+
+export enum PlacementType {
+    Place = 'Place',
+    Replace = 'Replace',
+    Insert = 'Insert'
+}
