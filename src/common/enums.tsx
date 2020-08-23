@@ -32,3 +32,7 @@ export enum PlacementType {
     Replace = 'Replace',
     Insert = 'Insert'
 }
+
+export enum Operation {
+    Move = 'Move'
+}

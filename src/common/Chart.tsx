@@ -84,5 +84,7 @@ export class Chart {
                 break
         }
         this.chartElements = this.chartElements.concat(normalizedNotes).sort((a, b) => a.beat - b.beat) as Note[]
+        
+        return new Chart(this.chartElements)
     }
 }

@@ -6,6 +6,7 @@ import { Chart } from '../common/Chart'
 import RangeSelector from './selectors/RangeSelector'
 import PositionSelector from './selectors/PositionSelector'
 import PlacementTypeSelector from './selectors/PlacementTypeSelector'
+import { OperationMove } from './operation-widgets/OperationMove'
 
 
 
@@ -36,7 +37,7 @@ class App extends React.Component {
         return (
             <Form onSubmit={this.onSubmit}>
                 <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px' }} verticalAlign='middle' centered>
-                    <Grid.Column style={{minWidth: '300px'}}>
+                    <Grid.Column width={3} style={{minWidth: '250px'}}>
                         <Segment>
                             <Form.Field
                                 style={{minHeight: '300px'}}
@@ -47,16 +48,14 @@ class App extends React.Component {
                             />
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column style={{minWidth: '450px'}}>
+                    <Grid.Column width={7} style={{minWidth: '750px'}}>
                         <Segment style={{textAlign: 'center'}}>
                             <Operations />
-                            <RangeSelector />
-                            <PositionSelector />
-                            <PlacementTypeSelector />
+                            <OperationMove />
                             <Form.Button content='Do It'/>
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column style={{minWidth: '300px'}}>
+                    <Grid.Column width={3} style={{minWidth: '250px'}}>
                         <Segment>
                             <Form.Field 
                                 style={{minHeight: '300px'}}

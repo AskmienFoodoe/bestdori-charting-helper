@@ -13,7 +13,7 @@ export interface ChartOperationBinder {
     (chart: Chart, ...any: any[]): BoundChartOperation
 }
 
-function convertRangeToBeatRange(chart: Chart, rangeType: RangeSelectorOption, rangeStart: number, rangeEnd: number): { start: number, end: number } {
+export function convertRangeToBeatRange(chart: Chart, rangeType: RangeSelectorOption, rangeStart: number, rangeEnd: number): { start: number, end: number } {
     switch(rangeType) {
         case RangeSelectorOption.Beat:
             return { start: rangeStart, end: rangeEnd }
@@ -25,7 +25,7 @@ function convertRangeToBeatRange(chart: Chart, rangeType: RangeSelectorOption, r
     }
 }
 
-function convertPositionToBeatPosition(chart: Chart, positionType: PositionSelectorOption, position: number, rangeStartAsBeatRange: number = 0): number {
+export function convertPositionToBeatPosition(chart: Chart, positionType: PositionSelectorOption, position: number, rangeStartAsBeatRange: number = 0): number {
     const notes = chart.getNotes()
     switch(positionType) {
         case PositionSelectorOption.Beat:

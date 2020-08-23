@@ -8,12 +8,12 @@ const options = [
     { key: 'insert', text: 'Insert', value: PlacementType.Insert }
 ]
 
-type stateType = {
-    placementType: PlacementType
-}
-
 type propsType = {
 
+}
+
+type stateType = {
+    placementType: PlacementType
 }
 
 export default class PlacementTypeSelector extends React.Component<propsType, stateType> {
@@ -29,14 +29,14 @@ export default class PlacementTypeSelector extends React.Component<propsType, st
 
     render() {
         return (
-            <Form.Input>
+            <>
                 <Label style={{ fontSize: '16px' }}>
                     <Dropdown
                         options={options}
                         value={this.state.placementType}
                         onChange={this.handleOptionChange} />
                 </Label>
-            </Form.Input>
+            </>
         )
     }
 }

@@ -8,13 +8,13 @@ const options = [
     { key: 'relative', text: 'ΔBeat', value: PositionSelectorOption.Relative }
 ]
 
+type propsType = {
+
+}
+
 type stateType = {
     positionSelectorOption: PositionSelectorOption,
     position: number
-}
-
-type propsType = {
-
 }
 
 export default class PositionSelector extends React.Component<propsType, stateType> {
@@ -44,7 +44,7 @@ export default class PositionSelector extends React.Component<propsType, stateTy
 
     render() {
         return (
-            <Form.Input>
+            <>
                 <Label style={{ fontSize: '16px' }}>
                     <Dropdown
                         options={options}
@@ -58,7 +58,7 @@ export default class PositionSelector extends React.Component<propsType, stateTy
                     value={this.state.position}
                     onChange={this.handlePositionChange}
                 />
-            </Form.Input>
+            </>
         )
     }
 }

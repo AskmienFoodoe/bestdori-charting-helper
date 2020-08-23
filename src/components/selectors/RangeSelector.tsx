@@ -3,19 +3,19 @@ import { Form, Dropdown, Label, Input, DropdownProps, InputOnChangeData } from '
 import { RangeSelectorOption } from '../../common/enums'
 
 const options = [
-    { key: 'note', text: 'Note', value: RangeSelectorOption.Note },
-    { key: 'beat', text: 'Beat', value: RangeSelectorOption.Beat },
+    { key: 'note', text: 'Notes', value: RangeSelectorOption.Note },
+    { key: 'beat', text: 'Beats', value: RangeSelectorOption.Beat },
     //{ key: 'prev', text: 'Prev', value: RangeSelectorOption.Prev }
 ]
+
+type propsType = {
+
+}
 
 type stateType = {
     rangeSelectorOption: RangeSelectorOption,
     start: number,
     end: number
-}
-
-type propsType = {
-
 }
 
 export default class RangeSelector extends React.Component<propsType, stateType> {
@@ -61,7 +61,7 @@ export default class RangeSelector extends React.Component<propsType, stateType>
 
     render() {
         return (
-            <Form.Input>
+            <>
                 <Label style={{ fontSize: '16px' }}>
                     <Dropdown
                         options={options}
@@ -85,7 +85,7 @@ export default class RangeSelector extends React.Component<propsType, stateType>
                     onChange={this.handleEndChange}
                     onBlur={this.fixStarttoEnd}
                 />
-            </Form.Input>
+            </>
         )
     }
 }
