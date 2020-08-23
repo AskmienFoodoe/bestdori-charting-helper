@@ -7,10 +7,14 @@ import RangeSelector from './selectors/RangeSelector'
 import PositionSelector from './selectors/PositionSelector'
 import PlacementTypeSelector from './selectors/PlacementTypeSelector'
 import { OperationMove } from './operation-widgets/OperationMove'
+import ChartContext from '../contexts/ChartContext'
 
 
 
 class App extends React.Component {
+
+    static contextType = ChartContext
+    context!: React.ContextType<typeof ChartContext>
 
     constructor(props: any) {
         super(props)
@@ -25,15 +29,20 @@ class App extends React.Component {
         this.setState({ inputChart: value })
     }
 
+    updateChartInContext = () => {
+        let inputChartAsJson = JSON.parse(this.state.inputChart)
+        let inputChartAsChart = new Chart(inputChartAsJson)
+        console.log(this.context)
+        this.context.updateChart(inputChartAsChart)
+    }
+
     onSubmit = (event: FormEvent) => {
         let inputChartAsJson = JSON.parse(this.state.inputChart)
-        console.log(inputChartAsJson)
         let inputChartAsChart = new Chart(inputChartAsJson)
         this.setState({outputChart: JSON.stringify(inputChartAsChart.chartElements)})
     }
 
     render() {
-
         return (
             <Form onSubmit={this.onSubmit}>
                 <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px' }} verticalAlign='middle' centered>
@@ -44,6 +53,7 @@ class App extends React.Component {
                                 control={TextArea}
                                 value={this.state.inputChart}
                                 onChange={this.onInputChange}
+                                onBlur={this.updateChartInContext}
                                 placeholder='Chart source code goes here...'
                             />
                         </Segment>

@@ -20,7 +20,6 @@ type stateType = {
 
 export default class RangeSelector extends React.Component<propsType, stateType> {
 
-    //TODO: set Chart start/end as Context
     state = {
         rangeSelectorOption: RangeSelectorOption.Note,
         start: 0,
