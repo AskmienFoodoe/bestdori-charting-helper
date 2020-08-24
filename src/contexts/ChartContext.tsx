@@ -1,13 +1,13 @@
 import React from 'react';
 import { Chart } from '../common/Chart';
 
-const ChartContext = React.createContext({chart: new Chart([])} as IChartContextValue)
+const ChartContext = React.createContext({chart: new Chart([])} as ChartContextValue)
 
 type stateType = {
     chart: Chart
 }
 
-interface IChartContextValue {
+interface ChartContextValue {
     chart: Chart
     updateChart: (chart: Chart) => void
 }
@@ -23,7 +23,7 @@ export class ChartStore extends React.Component<{}, stateType> {
     }
 
     render() {
-        const contextValue: IChartContextValue = {
+        const contextValue: ChartContextValue = {
             chart: this.state.chart,
             updateChart: this.updateChart
         }

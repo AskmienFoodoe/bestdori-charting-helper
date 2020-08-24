@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
+import { Dropdown, Label, DropdownProps } from 'semantic-ui-react'
 import { PlacementType } from '../../common/enums'
 
 const options = [

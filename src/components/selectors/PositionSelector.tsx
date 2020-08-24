@@ -1,8 +1,9 @@
 import React from 'react'
-import { Form, Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
+import { Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
 import { PositionSelectorOption } from '../../common/enums'
 import { Chart } from '../../common/Chart'
 import ChartContext from '../../contexts/ChartContext'
+import deepEqual from 'deep-equal'
 
 const options = [
     { key: 'note', text: 'Note', value: PositionSelectorOption.Note },
@@ -71,10 +72,7 @@ export default class PositionSelector extends React.Component<propsType, stateTy
     }
 
     componentDidUpdate(prevProps: propsType, prevState: stateType) {
-        if (prevProps.rangeStart !== this.props.rangeStart ||
-            prevState.position !== this.state.position ||
-            prevState.positionSelectorOption !== this.state.positionSelectorOption ||
-            this.context.chart !== this.state.currentChart) {
+        if (!deepEqual(prevState, this.state, { strict: true }) || this.context.chart !== this.state.currentChart) {
             this.props.onPositionChange(this.convertPositionToBeatPosition(this.context.chart, this.state.positionSelectorOption, this.state.position, this.props.rangeStart))
             this.setState({ currentChart: this.context.chart })
         }

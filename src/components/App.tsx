@@ -1,10 +1,11 @@
 import React, { FormEvent } from 'react'
 import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 
-import Operations from './Operations'
+import OperationList from './OperationList'
 import { Chart } from '../common/Chart'
-import { OperationMove } from './operation-widgets/OperationMove'
+import { MoveOperation } from './operation-widgets/MoveOperation'
 import ChartContext from '../contexts/ChartContext'
+import OperationSelector from './selectors/OperationSelector'
 
 
 
@@ -52,10 +53,10 @@ class App extends React.Component {
                             />
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width={7} style={{minWidth: '750px'}}>
-                        <Segment style={{textAlign: 'center'}}>
-                            <Operations />
-                            <OperationMove />
+                    <Grid.Column width={7} style={{minWidth: '850px'}}>
+                        <Segment style={{textAlign: 'center', minWidth: '825px'}}>
+                            <OperationList />
+                            <OperationSelector />
                             <Form.Button content='Do It'/>
                         </Segment>
                     </Grid.Column>

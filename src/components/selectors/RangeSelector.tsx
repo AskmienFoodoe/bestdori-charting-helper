@@ -1,8 +1,9 @@
 import React from 'react'
-import { Form, Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
+import { Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
 import { RangeSelectorOption } from '../../common/enums'
 import { Chart } from '../../common/Chart'
 import ChartContext from '../../contexts/ChartContext'
+import deepEqual from 'deep-equal'
 
 const options = [
     { key: 'note', text: 'Notes', value: RangeSelectorOption.Note },
@@ -85,9 +86,7 @@ export default class RangeSelector extends React.Component<propsType, stateType>
     }
 
     componentDidUpdate(prevProps: propsType, prevState: stateType) {
-        if (prevState.start !== this.state.start ||
-            prevState.end !== this.state.end ||
-            prevState.rangeSelectorOption !== this.state.rangeSelectorOption ||
+        if (!deepEqual(prevState, this.state, { strict: true }) ||
             this.context.chart !== this.state.currentChart) {
             this.props.onRangeChange(this.convertRangeToBeatRange(this.context.chart, this.state.rangeSelectorOption, this.state.start, this.state.end))
             this.setState({ currentChart: this.context.chart })
