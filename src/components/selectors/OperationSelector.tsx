@@ -10,7 +10,7 @@ const options = [
 ]
 
 type propsType = {
-
+    onOperationChange: (boundOperation: BoundChartOperation) => void
 }
 
 type stateType = {
@@ -35,13 +35,15 @@ export default class OperationSelector extends React.Component<propsType, stateT
     }
 
     componentDidUpdate(prevProps: propsType, prevState: stateType) {
-        
+        if(prevState.boundOperation !== this.state.boundOperation) {
+            this.props.onOperationChange(this.state.boundOperation)
+        }
     }
 
     renderOperationWidget() {
         switch (this.state.operationOption) {
             case Operation.Move:
-                return <MoveOperation updateBoundOperation={this.updateBoundOperation}/>
+                return <MoveOperation updateBoundOperation={this.updateBoundOperation} />
         }
     }
 

@@ -23,7 +23,7 @@ class App extends React.Component {
         outputChart: '',
     }
 
-    onInputChange = (event: Event, {value} : {value: string}) => {
+    handleInputChange = (event: Event, {value} : {value: string}) => {
         this.setState({ inputChart: value })
     }
 
@@ -33,13 +33,13 @@ class App extends React.Component {
         this.context.updateChart(inputChartAsChart)
     }
 
-    onSubmit = (event: FormEvent) => {
-        this.setState({outputChart: JSON.stringify(this.context.chart.chartElements)})
+    handleSubmit = (outputChart: Chart) => {
+        this.setState({outputChart: JSON.stringify(outputChart.chartElements)})
     }
 
     render() {
         return (
-            <Form onSubmit={this.onSubmit}>
+            <Form>
                 <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px' }} verticalAlign='middle' centered>
                     <Grid.Column width={3} style={{minWidth: '250px'}}>
                         <Segment>
@@ -47,7 +47,7 @@ class App extends React.Component {
                                 style={{minHeight: '300px'}}
                                 control={TextArea}
                                 value={this.state.inputChart}
-                                onChange={this.onInputChange}
+                                onChange={this.handleInputChange}
                                 onBlur={this.updateChartInContext}
                                 placeholder='Chart source code goes here...'
                             />
@@ -55,9 +55,7 @@ class App extends React.Component {
                     </Grid.Column>
                     <Grid.Column width={7} style={{minWidth: '850px'}}>
                         <Segment style={{textAlign: 'center', minWidth: '825px'}}>
-                            <OperationList />
-                            <OperationSelector />
-                            <Form.Button content='Do It'/>
+                            <OperationList onSubmit={this.handleSubmit} />
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={3} style={{minWidth: '250px'}}>
