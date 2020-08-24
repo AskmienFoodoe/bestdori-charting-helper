@@ -62,7 +62,7 @@ export class Chart {
         const firstBeat = sortedNotes[0].beat
         const normalizedNotes = sortedNotes.map(note => {
             let newNote = Object.assign({}, note)
-            newNote.beat -= firstBeat
+            newNote.beat = newNote.beat - firstBeat + beatPosition
             return newNote
         })
         const range = normalizedNotes[normalizedNotes.length - 1].beat
