@@ -4,10 +4,16 @@ import { BoundChartOperation } from '../../common/operations'
 import { Chart } from '../../common/Chart'
 import { MoveOperation } from '../operation-widgets/MoveOperation'
 import { Operation } from '../../common/enums'
+import { CopyOperation } from '../operation-widgets/CopyOperation'
+import { MirrorOperation } from '../operation-widgets/MirrorOperation'
 
-const options = [
-    { key: 'move', text: 'Move', value: Operation.Move },
-]
+const options = Object.keys(Operation).map(operation => {
+    return {
+        key: operation.toLowerCase(),
+        text: operation,
+        value: operation
+    }
+})
 
 type propsType = {
     onOperationChange: (boundOperation: BoundChartOperation) => void
@@ -44,6 +50,10 @@ export default class OperationSelector extends React.Component<propsType, stateT
         switch (this.state.operationOption) {
             case Operation.Move:
                 return <MoveOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.Copy:
+                return <CopyOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.Mirror:
+                return <MirrorOperation updateBoundOperation={this.updateBoundOperation} />
         }
     }
 

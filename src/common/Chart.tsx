@@ -62,10 +62,15 @@ export class Chart {
         const firstBeat = sortedNotes[0].beat
         const normalizedNotes = sortedNotes.map(note => {
             let newNote = Object.assign({}, note)
-            newNote.beat = newNote.beat - firstBeat + beatPosition
+            newNote.beat = newNote.beat - firstBeat
             return newNote
         })
         const range = normalizedNotes[normalizedNotes.length - 1].beat
+        const positionedNotes = normalizedNotes.map(note => {
+            let newNote = Object.assign({}, note)
+            newNote.beat = newNote.beat + beatPosition
+            return newNote
+        })
 
         switch (placementType) {
             case PlacementType.Place:
@@ -86,7 +91,7 @@ export class Chart {
                 })
                 break
         }
-        this.chartElements = this.chartElements.concat(normalizedNotes).sort((a, b) => a.beat - b.beat) as Note[]
+        this.chartElements = this.chartElements.concat(positionedNotes).sort((a, b) => a.beat - b.beat) as Note[]
         
         return new Chart(this.chartElements)
     }
