@@ -54,7 +54,9 @@ export default class OperationList extends React.Component<propsType, stateType>
                     icon='minus'
                     onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: ButtonProps) => {
                         event.preventDefault()
-                        this.removeOperationSelector(metadata.id)
+                        if (event.clientX !== 0) {
+                            this.removeOperationSelector(metadata.id)
+                        }
                     }}
                 />
             </Form.Group>
