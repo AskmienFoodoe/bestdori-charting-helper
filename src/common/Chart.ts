@@ -1,5 +1,5 @@
 import { ChartElement } from "./ChartElement";
-import { ChartElementType, NoteType, PlacementType } from "./enums";
+import { ChartElementType, NoteType, PlacementType, SlideNotePos, NoteLane } from "./enums";
 import { Note, SingleNote, SlideNote } from "./notes";
 import { BpmMarker } from "./BpmMarker";
 
@@ -9,21 +9,45 @@ export class Chart {
     numNotes: number
 
     constructor(chartElements: ChartElement[]) {
+
+        let lastLongStart = SlideNotePos.A
+        let lastALongLane: number = -1
+        let lastBLongLane: number = -1
+
         this.chartElements = chartElements.map((element: ChartElement) => {
-            if (element.type == ChartElementType.Note) {
+            if (element.type === ChartElementType.Note) {
                 let note = element as Note
-                if (note.note == NoteType.Single) {
+                if (note.note === NoteType.Single) {
                     return new SingleNote(note)
-                } else if (note.note == NoteType.Slide) {
+                } else if (note.note === NoteType.Slide) {
                     let slideNote = note as SlideNote
                     return new SlideNote(slideNote)
+                } else if (note.note === NoteType.Long) {
+                    let longNote = note as SlideNote
+                    if (longNote.start === true) {
+                        longNote.pos = lastLongStart === SlideNotePos.A ? SlideNotePos.B : SlideNotePos.A
+                        if (longNote.pos === SlideNotePos.A) {
+                            lastALongLane = longNote.lane
+                        } else if (longNote.pos === SlideNotePos.B) {
+                            lastBLongLane = longNote.lane
+                        }
+                    } else if (longNote.end === true) {
+                        if (longNote.lane === lastALongLane) {
+                            longNote.pos = SlideNotePos.A
+                        } else if (longNote.lane === lastBLongLane) {
+                            longNote.pos = SlideNotePos.B
+                        }
+                    }
+                    return new SlideNote(longNote)
                 }
-            } else if (element.type == ChartElementType.System) {
+            } else if (element.type === ChartElementType.System) {
                 let bpmMarker = element as BpmMarker
-                return new BpmMarker(bpmMarker)
+                if (bpmMarker.cmd === 'BPM') {
+                    return new BpmMarker(bpmMarker)
+                }
             }
             return {} as ChartElement //Ripperino in Pepperino
-        })
+        }).filter(element => Object.keys(element).length)
         this.numNotes = this.getNotes().length
     }
 

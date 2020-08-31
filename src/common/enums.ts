@@ -5,7 +5,8 @@ export enum ChartElementType {
 
 export enum NoteType {
     Single = 'Single',
-    Slide = 'Slide'
+    Slide = 'Slide',
+    Long = 'Long'
 }
 
 export type NoteLane = 1|2|3|4|5|6|7
