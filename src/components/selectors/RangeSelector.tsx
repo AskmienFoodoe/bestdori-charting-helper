@@ -12,23 +12,21 @@ const options = [
 ]
 
 type propsType = {
-    onRangeChange: ({ start, end }: { start: number, end: number }) => void
+    onRangeChange: (state: rangeSelectorState) => void
 }
 
-type stateType = {
-    currentChart: Chart
+type rangeSelectorState = {
     rangeSelectorOption: RangeSelectorOption,
     start: number,
     end: number
 }
 
-export default class RangeSelector extends React.Component<propsType, stateType> {
+export default class RangeSelector extends React.Component<propsType, rangeSelectorState> {
 
     static contextType = ChartContext
     context!: React.ContextType<typeof ChartContext>
 
     state = {
-        currentChart: new Chart([]),
         rangeSelectorOption: RangeSelectorOption.Note,
         start: 0,
         end: 0
@@ -66,30 +64,13 @@ export default class RangeSelector extends React.Component<propsType, stateType>
         }
     }
 
-    convertRangeToBeatRange(chart: Chart, rangeType: RangeSelectorOption, rangeStart: number, rangeEnd: number): { start: number, end: number } {
-        switch (rangeType) {
-            case RangeSelectorOption.Beat:
-                return { start: rangeStart, end: rangeEnd }
-            case RangeSelectorOption.Note:
-                const notes = chart.getNotes()
-                if (!notes.length) {
-                    return { start: 0, end: 0 }
-                }
-                const firstNoteIndex = Math.max(rangeStart - 1, 0)
-                const lastNoteIndex = Math.max(Math.min(rangeEnd - 1, notes.length - 1), 0)
-                return { start: notes[firstNoteIndex].beat, end: notes[lastNoteIndex].beat }
-        }
-    }
-
     componentDidMount() {
-        this.setState({ currentChart: this.context.chart, end: this.context.chart.numNotes })
+        this.setState({ end: this.context.chart.numNotes })
     }
 
-    componentDidUpdate(prevProps: propsType, prevState: stateType) {
-        if (!deepEqual(prevState, this.state, { strict: true }) ||
-            this.context.chart !== this.state.currentChart) {
-            this.props.onRangeChange(this.convertRangeToBeatRange(this.context.chart, this.state.rangeSelectorOption, this.state.start, this.state.end))
-            this.setState({ currentChart: this.context.chart })
+    componentDidUpdate(prevProps: propsType, prevState: rangeSelectorState) {
+        if (!deepEqual(prevState, this.state, { strict: true })) {
+            this.props.onRangeChange(this.state)
         }
     }
 
@@ -124,3 +105,5 @@ export default class RangeSelector extends React.Component<propsType, stateType>
         )
     }
 }
+
+export type { rangeSelectorState }

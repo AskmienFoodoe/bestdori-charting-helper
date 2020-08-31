@@ -1,10 +1,8 @@
 import React from 'react'
-import RangeSelector from '../selectors/RangeSelector'
-import { Label, Form } from 'semantic-ui-react'
-import PlacementTypeSelector from '../selectors/PlacementTypeSelector'
-import PositionSelector from '../selectors/PositionSelector'
-import { PlacementType, NoteLane, NoteType, SlideNotePos } from '../../common/enums'
-import { BoundChartOperation } from '../../common/operations'
+import RangeSelector, { rangeSelectorState } from '../selectors/RangeSelector'
+import { Form } from 'semantic-ui-react'
+import { PlacementType, NoteLane, NoteType, SlideNotePos, RangeSelectorOption } from '../../common/enums'
+import { BoundChartOperation, convertRangeToBeatRange } from '../../common/operations'
 import { OperationWidget } from '../../common/OperationWidget'
 import { Chart } from '../../common/Chart'
 import deepEqual from 'deep-equal'
@@ -15,21 +13,26 @@ type propsType = {
 }
 
 type stateType = {
-    range: { start: number, end: number }
+    rangeState: rangeSelectorState,
 }
 
 export class MirrorOperation extends React.Component<propsType, stateType> implements OperationWidget {
 
     state = {
-        range: { start: 0, end: 0 }
+        rangeState: {
+            rangeSelectorOption: RangeSelectorOption.Note,
+            start: 0,
+            end: 0
+        },
     }
 
-    handleRangeChange = (range: { start: number, end: number }) => {
-        this.setState({ range: range })
+    handleRangeChange = (rangeState: rangeSelectorState) => {
+        this.setState({ rangeState: rangeState })
     }
 
-    bindOperation = (start: number, end: number) => {
+    bindOperation = (rangeState: rangeSelectorState) => {
         return (chart: Chart) => {
+            const { start, end } = convertRangeToBeatRange(chart, rangeState)
             const notesExcerpt = chart.cutNotesExcerpt(start, end)
             const mirroredNotes = notesExcerpt.map(note => {
                 let newNote = Object.assign({}, note)
@@ -47,8 +50,7 @@ export class MirrorOperation extends React.Component<propsType, stateType> imple
 
     componentDidUpdate(prevProps: propsType, prevState: stateType) {
         if (!deepEqual(prevState, this.state, { strict: true })) {
-            const { start, end } = this.state.range
-            this.props.updateBoundOperation(this.bindOperation(start, end))
+            this.props.updateBoundOperation(this.bindOperation(this.state.rangeState))
         }
     }
 

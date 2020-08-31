@@ -1,10 +1,10 @@
 import React from 'react'
-import RangeSelector from '../selectors/RangeSelector'
+import RangeSelector, { rangeSelectorState } from '../selectors/RangeSelector'
 import { Label, Form } from 'semantic-ui-react'
 import PlacementTypeSelector from '../selectors/PlacementTypeSelector'
-import PositionSelector from '../selectors/PositionSelector'
-import { PlacementType } from '../../common/enums'
-import { BoundChartOperation } from '../../common/operations'
+import PositionSelector, { positionSelectorState } from '../selectors/PositionSelector'
+import { PlacementType, RangeSelectorOption, PositionSelectorOption } from '../../common/enums'
+import { BoundChartOperation, convertRangeToBeatRange, convertPositionToBeatPosition } from '../../common/operations'
 import { OperationWidget } from '../../common/OperationWidget'
 import { Chart } from '../../common/Chart'
 import deepEqual from 'deep-equal'
@@ -14,33 +14,42 @@ type propsType = {
 }
 
 type stateType = {
-    range: { start: number, end: number },
-    placementType: PlacementType,
-    position: number
+    rangeState: rangeSelectorState,
+    positionState: positionSelectorState,
+    placementType: PlacementType
 }
 
 export class MoveOperation extends React.Component<propsType, stateType> implements OperationWidget {
 
     state = {
-        range: { start: 0, end: 0 },
-        placementType: PlacementType.Place,
-        position: 0
+        rangeState: {
+            rangeSelectorOption: RangeSelectorOption.Note,
+            start: 0,
+            end: 0
+        },
+        positionState: {
+            positionSelectorOption: PositionSelectorOption.Note,
+            position: 0
+        },
+        placementType: PlacementType.Place
     }
 
-    handleRangeChange = (range: { start: number, end: number }) => {
-        this.setState({ range: range })
+    handleRangeChange = (rangeState: rangeSelectorState) => {
+        this.setState({ rangeState: rangeState })
     }
 
     handlePlacementTypeChange = (placementType: PlacementType) => {
         this.setState({ placementType: placementType })
     }
 
-    handlePositionChange = (position: number) => {
-        this.setState({ position: position })
+    handlePositionChange = (positionState: positionSelectorState) => {
+        this.setState({ positionState: positionState })
     }
 
-    bindOperation = (start: number, end: number, position: number, placementType: PlacementType) => {
+    bindOperation = (rangeState: rangeSelectorState, positionState: positionSelectorState, placementType: PlacementType) => {
         return (chart: Chart) => {
+            const { start, end } = convertRangeToBeatRange(chart, rangeState)
+            const position = convertPositionToBeatPosition(chart, positionState)
             const notesExcerpt = chart.cutNotesExcerpt(start, end)
             chart.addNotes(notesExcerpt, position, placementType)
             return chart
@@ -49,8 +58,8 @@ export class MoveOperation extends React.Component<propsType, stateType> impleme
 
     componentDidUpdate(prevProps: propsType, prevState: stateType) {
         if (!deepEqual(prevState, this.state, { strict: true })) {
-            const { start, end } = this.state.range
-            this.props.updateBoundOperation(this.bindOperation(start, end, this.state.position, this.state.placementType))
+            const { rangeState, positionState, placementType } = this.state
+            this.props.updateBoundOperation(this.bindOperation(rangeState, positionState, placementType))
         }
     }
 
@@ -61,7 +70,7 @@ export class MoveOperation extends React.Component<propsType, stateType> impleme
                 <Label style={{ fontSize: '16px' }} basic>and</Label>
                 <PlacementTypeSelector onPlacementTypeChange={this.handlePlacementTypeChange} />
                 <Label style={{ fontSize: '16px' }} basic>at</Label>
-                <PositionSelector onPositionChange={this.handlePositionChange} rangeStart={this.state.range.start} />
+                <PositionSelector onPositionChange={this.handlePositionChange} />
             </Form.Input>
         )
     }
