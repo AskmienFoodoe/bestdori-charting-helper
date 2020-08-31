@@ -37,12 +37,20 @@ class App extends React.Component {
         this.setState({outputChart: JSON.stringify(outputChart.chartElements)})
     }
 
+    componentDidMount() {
+        const chartElements = this.context.chart.chartElements
+        if (chartElements.length) {
+            this.setState({inputChart: JSON.stringify(this.context.chart.chartElements)})
+        }
+    }
+
     render() {
         return (
             <Form>
                 <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px' }} verticalAlign='middle' centered>
                     <Grid.Column width={3} style={{minWidth: '250px'}}>
-                        <Segment>
+                        <Segment style={{textAlign: 'center'}}>
+                            <h3>Input</h3>
                             <Form.Field
                                 style={{minHeight: '300px'}}
                                 control={TextArea}
@@ -55,11 +63,13 @@ class App extends React.Component {
                     </Grid.Column>
                     <Grid.Column width={7} style={{minWidth: '850px'}}>
                         <Segment style={{textAlign: 'center', minWidth: '825px'}}>
+                            <h3>Operations</h3>
                             <OperationList onSubmit={this.handleSubmit} />
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={3} style={{minWidth: '250px'}}>
-                        <Segment>
+                        <Segment style={{textAlign: 'center'}}>
+                            <h3>Output</h3>
                             <Form.Field 
                                 style={{minHeight: '300px'}}
                                 control={TextArea} 

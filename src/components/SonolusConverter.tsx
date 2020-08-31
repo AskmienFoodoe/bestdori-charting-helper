@@ -42,14 +42,22 @@ export default class SonolusConverter extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const chartElements = this.context.chart.chartElements
+        if (chartElements.length) {
+            this.setState({inputChart: JSON.stringify(this.context.chart.chartElements)})
+        }
+    }
+
     render() {
         return (
             <Form>
                 <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft: '150px', paddingRight: '150px' }} verticalAlign='middle' centered>
                     <Grid.Column width={4} style={{ minWidth: '250px' }}>
-                        <Segment>
+                        <Segment style={{textAlign: 'center'}}>
+                            <h3>Input</h3>
                             <Form.Field
-                                style={{ minHeight: '500px' }}
+                                style={{ minHeight: '814px' }}
                                 control={TextArea}
                                 value={this.state.inputChart}
                                 onChange={this.handleInputChange}
@@ -69,7 +77,8 @@ export default class SonolusConverter extends React.Component {
                         </Button>
                     </Grid.Column>
                     <Grid.Column width={4} style={{ minWidth: '250px' }}>
-                        <Segment>
+                        <Segment style={{textAlign: 'center'}}>
+                            <h3>Output</h3>
                             <Form.Field
                                 style={{ minHeight: '400px' }}
                                 control={TextArea}

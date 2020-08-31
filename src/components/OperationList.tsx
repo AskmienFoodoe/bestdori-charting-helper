@@ -66,7 +66,6 @@ export default class OperationList extends React.Component<propsType, stateType>
     render() {
         return (
             <>
-                <h3>Operations</h3>
                 {this.renderOperationSelectors()}
                 <Button
                     circular
