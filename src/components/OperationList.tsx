@@ -65,7 +65,7 @@ export default class OperationList extends React.Component<propsType, stateType>
 
     render() {
         return (
-            <>
+            <Form>
                 {this.renderOperationSelectors()}
                 <Button
                     circular
@@ -78,7 +78,7 @@ export default class OperationList extends React.Component<propsType, stateType>
                     }}
                 />
                 <Form.Button color='yellow' content='Do It' onClick={this.applyOperations}/>
-            </>
+            </Form>
         )
     }
 }

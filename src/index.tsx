@@ -13,7 +13,7 @@ ReactDOM.render(
         <Sticky>
           <Menu size='massive'>
             <Menu.Item as={Link} to='/' content='Charting Tools' />
-            <Menu.Item as={Link} to='/sonolus-converter' content='Sonolus Converter' />
+            <Menu.Item as={Link} to='/sonolus-converter' content='Bestdori-to-Sonolus Converter' />
           </Menu>
         </Sticky>
         <Route path="/" exact component={App} />

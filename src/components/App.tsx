@@ -6,8 +6,7 @@ import { Chart } from '../common/Chart'
 import { MoveOperation } from './operation-widgets/MoveOperation'
 import ChartContext from '../contexts/ChartContext'
 import OperationSelector from './selectors/OperationSelector'
-
-
+import ChartInput from './ChartInput'
 
 class App extends React.Component {
 
@@ -19,46 +18,21 @@ class App extends React.Component {
     }
 
     state = {
-        inputChart: '',
         outputChart: '',
-    }
-
-    handleInputChange = (event: Event, {value} : {value: string}) => {
-        this.setState({ inputChart: value })
-    }
-
-    updateChartInContext = () => {
-        let inputChartAsJson = JSON.parse(this.state.inputChart)
-        let inputChartAsChart = new Chart(inputChartAsJson)
-        this.context.updateChart(inputChartAsChart)
     }
 
     handleSubmit = (outputChart: Chart) => {
         this.setState({outputChart: JSON.stringify(outputChart.chartElements)})
     }
 
-    componentDidMount() {
-        const chartElements = this.context.chart.chartElements
-        if (chartElements.length) {
-            this.setState({inputChart: JSON.stringify(this.context.chart.chartElements)})
-        }
-    }
-
     render() {
         return (
-            <Form>
-                <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px' }} verticalAlign='middle' centered>
-                    <Grid.Column width={3} style={{minWidth: '250px'}}>
-                        <Segment style={{textAlign: 'center'}}>
-                            <h3>Input</h3>
-                            <Form.Field
-                                style={{minHeight: '300px'}}
-                                control={TextArea}
-                                value={this.state.inputChart}
-                                onChange={this.handleInputChange}
-                                onBlur={this.updateChartInContext}
-                                placeholder='Chart source code goes here...'
-                            />
+            <>
+                <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px', paddingTop:'250px' }} centered>
+                    <Grid.Column width={4} style={{minWidth: '250px'}}>
+                        <Segment>
+                            <h3 style={{textAlign: 'center'}}>Input</h3>
+                            <ChartInput />
                         </Segment>
                     </Grid.Column>
                     <Grid.Column width={7} style={{minWidth: '850px'}}>
@@ -67,20 +41,22 @@ class App extends React.Component {
                             <OperationList onSubmit={this.handleSubmit} />
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width={3} style={{minWidth: '250px'}}>
+                    <Grid.Column width={4} style={{minWidth: '250px'}}>
                         <Segment style={{textAlign: 'center'}}>
                             <h3>Output</h3>
-                            <Form.Field 
-                                style={{minHeight: '300px'}}
-                                control={TextArea} 
-                                readOnly 
-                                value={this.state.outputChart}
-                                placeholder='Transformed chart source code appears here!'
-                            />
+                            <Form>
+                                <Form.Field 
+                                    style={{minHeight: '300px'}}
+                                    control={TextArea} 
+                                    readOnly 
+                                    value={this.state.outputChart}
+                                    placeholder='Transformed chart source code appears here!'
+                                />
+                            </Form>
                         </Segment>
                     </Grid.Column>
                 </Grid>
-            </Form>
+            </>
         )
     }
 }
