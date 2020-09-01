@@ -4,7 +4,7 @@ import { OperationSelectorMetadata } from '../common/OperationSelectorMetadata'
 import { BoundChartOperation } from '../common/operations'
 import { v4 as uuid } from 'uuid'
 import { Chart } from '../common/Chart'
-import { Form, Button, ButtonProps } from 'semantic-ui-react'
+import { Form, Button, ButtonProps, Popup } from 'semantic-ui-react'
 import ChartContext from '../contexts/ChartContext'
 
 type propsType = {
@@ -51,7 +51,8 @@ export default class OperationList extends React.Component<propsType, stateType>
                 <Button
                     circular
                     floated='right'
-                    icon='minus'
+                    icon='close'
+                    color='youtube'
                     onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: ButtonProps) => {
                         event.preventDefault()
                         if (event.clientX !== 0) {
@@ -67,16 +68,18 @@ export default class OperationList extends React.Component<propsType, stateType>
         return (
             <Form>
                 {this.renderOperationSelectors()}
-                <Button
-                    circular
-                    floated='left'
-                    icon='plus'
-                    content='Add Operation'
-                    onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: ButtonProps) => {
-                        event.preventDefault()
-                        this.addOperationSelector()
-                    }}
-                />
+                <Popup on={['hover']} position='bottom left' mouseEnterDelay={550} content='Adds an operation to the stack. Operations are performed in succession from top to bottom.' trigger={
+                    <Button
+                        circular
+                        floated='left'
+                        icon='plus'
+                        content='Add Operation'
+                        onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: ButtonProps) => {
+                            event.preventDefault()
+                            this.addOperationSelector()
+                        }}
+                    />
+                }/>
                 <Form.Button color='yellow' content='Do It' onClick={this.applyOperations}/>
             </Form>
         )

@@ -1,11 +1,12 @@
 import React from 'react'
-import { Dropdown, Label, DropdownProps, Form } from 'semantic-ui-react'
+import { Dropdown, Label, Form, Popup, DropdownItemProps } from 'semantic-ui-react'
 import { BoundChartOperation } from '../../common/operations'
 import { Chart } from '../../common/Chart'
 import { MoveOperation } from '../operation-widgets/MoveOperation'
 import { Operation } from '../../common/enums'
 import { CopyOperation } from '../operation-widgets/CopyOperation'
 import { MirrorOperation } from '../operation-widgets/MirrorOperation'
+import { popups } from '../../constants/operation-popups'
 
 const options = Object.keys(Operation).map(operation => {
     return {
@@ -31,7 +32,7 @@ export default class OperationSelector extends React.Component<propsType, stateT
         boundOperation: (chart: Chart) => chart
     }
 
-    handleOptionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+    handleOptionChange = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, data: DropdownItemProps) => {
         let newOperationOption = data.value as Operation
         this.setState({ operationOption: newOperationOption })
     }
@@ -57,14 +58,23 @@ export default class OperationSelector extends React.Component<propsType, stateT
         }
     }
 
+    renderDropdownOptions() {
+        return options.map((option) => 
+            <Popup on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
+                <Dropdown.Item {...option} active={this.state.operationOption === option.value} onClick={this.handleOptionChange}/>
+            } />
+        )
+    }
+
     render() {
         return (
             <Form.Input>
                 <Label style={{ fontSize: '16px' }}>
-                    <Dropdown
-                        options={options}
-                        value={this.state.operationOption}
-                        onChange={this.handleOptionChange} />
+                    <Dropdown text={this.state.operationOption}>
+                        <Dropdown.Menu>
+                            {this.renderDropdownOptions()}
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Label>
                 {this.renderOperationWidget()}
             </Form.Input>

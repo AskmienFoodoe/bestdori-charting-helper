@@ -50,7 +50,7 @@ export class CopyOperation extends React.Component<propsType, stateType> impleme
     bindOperation = (rangeState: rangeSelectorState, positionState: positionSelectorState, placementType: PlacementType) => {
         return (chart: Chart) => {
             const { start, end } = convertRangeToBeatRange(chart, rangeState)
-            const position = convertPositionToBeatPosition(chart, positionState)
+            const position = convertPositionToBeatPosition(chart, positionState, start)
             const notesExcerpt = chart.copyNotesExcerpt(start, end)
             chart.addNotes(notesExcerpt, position, placementType)
             return chart

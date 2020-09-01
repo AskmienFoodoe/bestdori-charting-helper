@@ -1,7 +1,6 @@
 import React from 'react'
-import { Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
+import { Dropdown, Label, Input, InputOnChangeData, Popup, DropdownItemProps } from 'semantic-ui-react'
 import { RangeSelectorOption } from '../../common/enums'
-import { Chart } from '../../common/Chart'
 import ChartContext from '../../contexts/ChartContext'
 import deepEqual from 'deep-equal'
 
@@ -11,8 +10,17 @@ const options = [
     //{ key: 'prev', text: 'Prev', value: RangeSelectorOption.Prev }
 ]
 
+const popups: {[key: string]: string} = {
+    [RangeSelectorOption.Note]: `Selects all notes between the Nth and Mth notes (inclusive).`,
+    [RangeSelectorOption.Beat]: `Selects all notes that fall within the provided beats (inclusive). The actual range of the interval selected is determined by the positions of the first and last notes.`
+}
+
 type propsType = {
     onRangeChange: (state: rangeSelectorState) => void
+}
+
+type stateType = {
+    rangeSelectorText: string
 }
 
 type rangeSelectorState = {
@@ -21,19 +29,20 @@ type rangeSelectorState = {
     end: number
 }
 
-export default class RangeSelector extends React.Component<propsType, rangeSelectorState> {
+export default class RangeSelector extends React.Component<propsType, stateType | rangeSelectorState> {
 
     static contextType = ChartContext
     context!: React.ContextType<typeof ChartContext>
 
     state = {
         rangeSelectorOption: RangeSelectorOption.Note,
+        rangeSelectorText: 'Notes',
         start: 0,
         end: 0
     }
 
-    handleOptionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-        this.setState({ rangeSelectorOption: data.value as RangeSelectorOption })
+    handleOptionChange = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, data: DropdownItemProps) => {
+        this.setState({ rangeSelectorOption: data.value as RangeSelectorOption, rangeSelectorText: data.text })
     }
 
     handleStartChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -74,14 +83,23 @@ export default class RangeSelector extends React.Component<propsType, rangeSelec
         }
     }
 
+    renderDropdownOptions() {
+        return options.map((option) => 
+            <Popup on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
+                <Dropdown.Item {...option} active={this.state.rangeSelectorOption === option.value} onClick={this.handleOptionChange}/>
+            } />
+        )
+    }
+
     render() {
         return (
             <>
                 <Label style={{ fontSize: '16px' }}>
-                    <Dropdown
-                        options={options}
-                        value={this.state.rangeSelectorOption}
-                        onChange={this.handleOptionChange} />
+                    <Dropdown text={this.state.rangeSelectorText}>
+                        <Dropdown.Menu>
+                            {this.renderDropdownOptions()}
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Label>
                 <Input
                     style={{ width: '80px' }}

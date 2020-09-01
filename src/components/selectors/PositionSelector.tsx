@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Label, Input, DropdownProps, InputOnChangeData } from 'semantic-ui-react'
+import { Dropdown, Label, Input, InputOnChangeData, Popup, DropdownItemProps } from 'semantic-ui-react'
 import { PositionSelectorOption } from '../../common/enums'
 import deepEqual from 'deep-equal'
 
@@ -9,8 +9,18 @@ const options = [
     { key: 'relative', text: 'ΔBeat', value: PositionSelectorOption.Relative }
 ]
 
+const popups: {[key: string]: string} = {
+    [PositionSelectorOption.Note]: `Places notes starting at the position of the provided note.`,
+    [PositionSelectorOption.Beat]: `Places notes starting from the provided beat.`,
+    [PositionSelectorOption.Relative]: `Places notes X beats relative to the position of the first note in the selection.`
+}
+
 type propsType = {
     onPositionChange: (state: positionSelectorState) => void
+}
+
+type stateType = {
+    positionSelectorText: string
 }
 
 type positionSelectorState = {
@@ -18,19 +28,20 @@ type positionSelectorState = {
     position: number
 }
 
-export default class PositionSelector extends React.Component<propsType, positionSelectorState> {
+export default class PositionSelector extends React.Component<propsType, stateType | positionSelectorState> {
 
     state = {
         positionSelectorOption: PositionSelectorOption.Relative,
+        positionSelectorText: 'ΔBeat',
         position: 0
     }
 
-    handleOptionChange = (event: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
+    handleOptionChange = (event: React.MouseEvent<HTMLDivElement, MouseEvent>, data: DropdownItemProps) => {
         let newPositionSelectorOption = data.value as PositionSelectorOption
         if (newPositionSelectorOption === PositionSelectorOption.Relative) {
-            this.setState({ positionSelectorOption: newPositionSelectorOption, position: 0 })
+            this.setState({ positionSelectorOption: newPositionSelectorOption, positionSelectorText: data.text, position: 0 })
         } else {
-            this.setState({ positionSelectorOption: newPositionSelectorOption })
+            this.setState({ positionSelectorOption: newPositionSelectorOption, positionSelectorText: data.text })
         }
 
     }
@@ -49,14 +60,23 @@ export default class PositionSelector extends React.Component<propsType, positio
         }
     }
 
+    renderDropdownOptions() {
+        return options.map((option) => 
+            <Popup on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
+                <Dropdown.Item {...option} active={this.state.positionSelectorOption === option.value} onClick={this.handleOptionChange}/>
+            } />
+        )
+    }
+
     render() {
         return (
             <>
                 <Label style={{ fontSize: '16px' }}>
-                    <Dropdown
-                        options={options}
-                        value={this.state.positionSelectorOption}
-                        onChange={this.handleOptionChange} />
+                    <Dropdown text={this.state.positionSelectorText}>
+                        <Dropdown.Menu>
+                            {this.renderDropdownOptions()}
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </Label>
                 <Input
                     style={{ width: '80px' }}
