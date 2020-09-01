@@ -10,7 +10,9 @@ export class Chart {
 
     constructor(chartElements: ChartElement[]) {
 
-        let lastLongStart = SlideNotePos.A
+        let lastLongPos = SlideNotePos.B
+        let isAFree = true
+        let isBFree = true
         let lastALongLane: number = -1
         let lastBLongLane: number = -1
 
@@ -21,21 +23,69 @@ export class Chart {
                     return new SingleNote(note)
                 } else if (note.note === NoteType.Slide) {
                     let slideNote = note as SlideNote
+                    //Slide pos should also be checked
+                    if (slideNote.start) {
+                        if (slideNote.pos === SlideNotePos.A) {
+                            isAFree = false
+                        } else if (slideNote.pos === SlideNotePos.B) {
+                            isBFree = false
+                        }
+                    } else if (slideNote.end) {
+                        if (slideNote.pos === SlideNotePos.A) {
+                            isAFree = true
+                        } else if (slideNote.pos === SlideNotePos.B) {
+                            isBFree = true
+                        }
+                    }
                     return new SlideNote(slideNote)
                 } else if (note.note === NoteType.Long) {
                     let longNote = note as SlideNote
                     if (longNote.start === true) {
-                        longNote.pos = lastLongStart === SlideNotePos.A ? SlideNotePos.B : SlideNotePos.A
-                        if (longNote.pos === SlideNotePos.A) {
-                            lastALongLane = longNote.lane
-                        } else if (longNote.pos === SlideNotePos.B) {
-                            lastBLongLane = longNote.lane
+                        //Handles the edge case where a Long starts on the same beat as a Slide
+                        const concurrentSlides = chartElements.filter((element) => element.beat === longNote.beat && (element as Note).note === NoteType.Slide) as SlideNote[]
+                        if (concurrentSlides.length) {
+                            if (concurrentSlides[0].pos === SlideNotePos.A) {
+                                longNote.pos = SlideNotePos.B
+                                lastBLongLane = longNote.lane
+                                isBFree = false
+                            } else if (concurrentSlides[0].pos === SlideNotePos.B) {
+                                longNote.pos = SlideNotePos.A
+                                lastALongLane = longNote.lane
+                                isAFree = false
+                            }
                         }
+                        //Prioritizes alternating pos if possible
+                        else if (lastLongPos === SlideNotePos.A) {
+                            if (isBFree) {
+                                longNote.pos = SlideNotePos.B
+                                lastBLongLane = longNote.lane
+                                isBFree = false
+                            } else if (isAFree) {
+                                longNote.pos = SlideNotePos.A
+                                lastALongLane = longNote.lane
+                                isAFree = false
+                            }
+                        } else if (lastLongPos === SlideNotePos.B) {
+                            if (isAFree) {
+                                longNote.pos = SlideNotePos.A
+                                lastALongLane = longNote.lane
+                                isAFree = false
+                            } else if (isBFree) {
+                                longNote.pos = SlideNotePos.B
+                                lastBLongLane = longNote.lane
+                                isBFree = false
+                            }
+                        }
+                        lastLongPos = longNote.pos
                     } else if (longNote.end === true) {
                         if (longNote.lane === lastALongLane) {
                             longNote.pos = SlideNotePos.A
+                            lastALongLane = -1
+                            isAFree = true
                         } else if (longNote.lane === lastBLongLane) {
                             longNote.pos = SlideNotePos.B
+                            lastBLongLane = -1
+                            isBFree = true
                         }
                     }
                     return new SlideNote(longNote)
