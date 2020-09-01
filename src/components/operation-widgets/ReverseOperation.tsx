@@ -16,7 +16,7 @@ type stateType = {
     rangeState: rangeSelectorState,
 }
 
-export default class MirrorOperation extends React.Component<propsType, stateType> implements OperationWidget {
+export default class ReverseOperation extends React.Component<propsType, stateType> implements OperationWidget {
 
     state = {
         rangeState: {
@@ -35,16 +35,24 @@ export default class MirrorOperation extends React.Component<propsType, stateTyp
             const { start, end } = convertRangeToBeatRange(chart, rangeState)
             const notesExcerpt = chart.cutNotesExcerpt(start, end)
             const notesStart = notesExcerpt.length ? notesExcerpt[0].beat : 0
-            const mirroredNotes = notesExcerpt.map(note => {
+            const notesEnd = notesExcerpt.length ? notesExcerpt[notesExcerpt.length-1].beat : 0
+            const reversedNotes = notesExcerpt.map(note => {
                 let newNote = Object.assign({}, note)
-                newNote.lane = (8 - newNote.lane) as NoteLane
+                newNote.beat = notesStart + notesEnd - newNote.beat
                 if (newNote.note === NoteType.Slide) {
                     const newSlideNote = newNote as SlideNote
-                    newSlideNote.pos = newSlideNote.pos === SlideNotePos.A ? SlideNotePos.B : SlideNotePos.A
+                    newSlideNote.flick = false
+                    if (newSlideNote.end) {
+                        newSlideNote.end = false
+                        newSlideNote.start = true
+                    } else if (newSlideNote.start) {
+                        newSlideNote.start = false
+                        newSlideNote.end = true
+                    }
                 }
                 return newNote
             })
-            chart.addNotes(mirroredNotes, notesStart, PlacementType.Place)
+            chart.addNotes(reversedNotes, notesStart, PlacementType.Place)
             return chart
         }
     }

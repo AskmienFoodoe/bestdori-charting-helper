@@ -20,7 +20,7 @@ type stateType = {
     placementType: PlacementType
 }
 
-export class CopyOperation extends React.Component<propsType, stateType> implements OperationWidget {
+export default class CopyOperation extends React.Component<propsType, stateType> implements OperationWidget {
 
     state = {
         rangeState: {
@@ -50,8 +50,9 @@ export class CopyOperation extends React.Component<propsType, stateType> impleme
     bindOperation = (rangeState: rangeSelectorState, positionState: positionSelectorState, placementType: PlacementType) => {
         return (chart: Chart) => {
             const { start, end } = convertRangeToBeatRange(chart, rangeState)
-            const position = convertPositionToBeatPosition(chart, positionState, start)
             const notesExcerpt = chart.copyNotesExcerpt(start, end)
+            const notesStart = notesExcerpt.length ? notesExcerpt[0].beat : 0
+            const position = convertPositionToBeatPosition(chart, positionState, notesStart)
             chart.addNotes(notesExcerpt, position, placementType)
             return chart
         }

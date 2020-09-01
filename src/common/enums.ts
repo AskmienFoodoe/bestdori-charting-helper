@@ -37,5 +37,6 @@ export enum PlacementType {
 export enum Operation {
     Move = 'Move',
     Copy = 'Copy',
-    Mirror = 'Mirror'
+    Mirror = 'Mirror',
+    Reverse = 'Reverse',
 }

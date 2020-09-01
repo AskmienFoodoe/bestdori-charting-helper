@@ -2,11 +2,12 @@ import React from 'react'
 import { Dropdown, Label, Form, Popup, DropdownItemProps } from 'semantic-ui-react'
 import { BoundChartOperation } from '../../common/operations'
 import { Chart } from '../../common/Chart'
-import { MoveOperation } from '../operation-widgets/MoveOperation'
+import MoveOperation from '../operation-widgets/MoveOperation'
 import { Operation } from '../../common/enums'
-import { CopyOperation } from '../operation-widgets/CopyOperation'
-import { MirrorOperation } from '../operation-widgets/MirrorOperation'
+import CopyOperation from '../operation-widgets/CopyOperation'
+import MirrorOperation from '../operation-widgets/MirrorOperation'
 import { popups } from '../../constants/operation-popups'
+import ReverseOperation from '../operation-widgets/ReverseOperation'
 
 const options = Object.keys(Operation).map(operation => {
     return {
@@ -55,6 +56,8 @@ export default class OperationSelector extends React.Component<propsType, stateT
                 return <CopyOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.Mirror:
                 return <MirrorOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.Reverse:
+                return <ReverseOperation updateBoundOperation={this.updateBoundOperation} />
         }
     }
 

@@ -3,9 +3,7 @@ import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 
 import OperationList from './OperationList'
 import { Chart } from '../common/Chart'
-import { MoveOperation } from './operation-widgets/MoveOperation'
 import ChartContext from '../contexts/ChartContext'
-import OperationSelector from './selectors/OperationSelector'
 import ChartInput from './ChartInput'
 
 class App extends React.Component {
@@ -38,6 +36,7 @@ class App extends React.Component {
                     <Grid.Column width={7} style={{minWidth: '850px'}}>
                         <Segment style={{textAlign: 'center', minWidth: '825px'}}>
                             <h3>Operations</h3>
+                            <div style={{marginBottom: '10px'}}>Note: most operations do not interact with BPM markers</div>
                             <OperationList onSubmit={this.handleSubmit} />
                         </Segment>
                     </Grid.Column>

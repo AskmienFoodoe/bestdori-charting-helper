@@ -110,6 +110,7 @@ export default class ChartInput extends React.Component<propsType, stateType> {
                         <Button content='Ex' difficulty='expert' color={this.state.difficulty === 'expert' ? 'red' : undefined} onClick={this.handleDifficultyChange} />
                         <Button content='Sp' difficulty='special' color={this.state.difficulty === 'special' ? 'pink' : undefined} onClick={this.handleDifficultyChange} />
                     </Button.Group>
+                    <Message warning header='Warning!' content='Charts where straight holds and slides overlap may not parse correctly because trying to figure out how to convert from Longs to Slides makes me want to go commit die'/>
                 </>
             )
         } else if (source === 'bestdori') {
@@ -123,7 +124,7 @@ export default class ChartInput extends React.Component<propsType, stateType> {
 
     render() {
         return (
-            <Form error={!!this.state.errorMessage.length}>
+            <Form warning error={!!this.state.errorMessage.length}>
                 <h5>Source</h5>
                 <Form.Field inline>
                     <Label style={{ fontSize: '16px' }}>
