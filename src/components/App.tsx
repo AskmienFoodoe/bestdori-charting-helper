@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React from 'react'
 import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 
 import OperationList from './OperationList'
@@ -10,10 +10,6 @@ class App extends React.Component {
 
     static contextType = ChartContext
     context!: React.ContextType<typeof ChartContext>
-
-    constructor(props: any) {
-        super(props)
-    }
 
     state = {
         outputChart: '',

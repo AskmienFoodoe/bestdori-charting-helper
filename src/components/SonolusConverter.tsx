@@ -12,10 +12,6 @@ export default class SonolusConverter extends React.Component {
     static contextType = ChartContext
     context!: React.ContextType<typeof ChartContext>
 
-    constructor(props: any) {
-        super(props)
-    }
-
     state = {
         inputChart: '',
         level: '',

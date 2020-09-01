@@ -51,7 +51,7 @@ export default class PositionSelector extends React.Component<propsType, stateTy
         if (this.state.positionSelectorOption === PositionSelectorOption.Note) {
             newPosition = Math.round(newPosition)
         }
-        this.setState({ position: +data.value })
+        this.setState({ position: newPosition })
     }
 
     componentDidUpdate(prevProps: propsType, prevState: positionSelectorState) {

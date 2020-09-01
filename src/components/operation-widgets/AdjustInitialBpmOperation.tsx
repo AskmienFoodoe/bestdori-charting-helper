@@ -1,11 +1,10 @@
 import React from 'react'
 import { Form, Input, Label, InputOnChangeData } from 'semantic-ui-react'
-import { PlacementType, NoteType, RangeSelectorOption, ChartElementType } from '../../common/enums'
-import { BoundChartOperation, convertRangeToBeatRange } from '../../common/operations'
+import { ChartElementType } from '../../common/enums'
+import { BoundChartOperation } from '../../common/operations'
 import { OperationWidget } from '../../common/OperationWidget'
 import { Chart } from '../../common/Chart'
 import deepEqual from 'deep-equal'
-import { SlideNote } from '../../common/notes'
 import ChartContext from '../../contexts/ChartContext'
 import { BpmMarker } from '../../common/BpmMarker'
 

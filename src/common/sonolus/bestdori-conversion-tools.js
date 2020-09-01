@@ -32,6 +32,8 @@ export const convert = notes => {
                     note.head = findSlidePrev(notes, note, index)
                 }
                 break
+            default:
+                break
         }
     })
 
@@ -52,6 +54,8 @@ export const convert = notes => {
             case 'Slide':
                 note.archetype = note.start ? 3 : note.end ? (note.flick ? 7 : 6) : 5
                 break
+            default:
+                break
         }
 
         switch (note.archetype) {
@@ -64,6 +68,8 @@ export const convert = notes => {
             case 6:
             case 7:
                 slides = slides.filter(slide => !slide.includes(note.head.index))
+                break
+            default:
                 break
         }
 

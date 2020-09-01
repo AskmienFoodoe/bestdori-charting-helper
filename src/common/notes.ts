@@ -23,7 +23,7 @@ export class SingleNote implements Note {
         this.skill = skill
 
         if (this.flick && this.skill) {
-            throw 'A single note cannot be a flick and a skill at the same time!'
+            throw new Error('A single note cannot be a flick and a skill at the same time!')
         }
     }
 }
@@ -48,11 +48,11 @@ export class SlideNote implements Note {
         this.end = end
 
         if (this.flick && !this.end) {
-            throw 'Only an end slide note can be a flick!'
+            throw new Error('Only an end slide note can be a flick!')
         }
 
         if (this.start && this.end) {
-            throw 'A slide note cannot be both a start and an end!'
+            throw new Error('A slide note cannot be both a start and an end!')
         }
     }
 }

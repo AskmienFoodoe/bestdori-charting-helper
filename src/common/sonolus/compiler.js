@@ -162,6 +162,8 @@ function splitExpressions(data) {
                     current = ''
                 }
                 break
+            default:
+                break
         }
         if (add) {
             current += char

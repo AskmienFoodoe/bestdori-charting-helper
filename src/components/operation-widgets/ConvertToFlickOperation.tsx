@@ -1,7 +1,7 @@
 import React from 'react'
 import RangeSelector, { rangeSelectorState } from '../selectors/RangeSelector'
 import { Form, Label, Popup, CheckboxProps } from 'semantic-ui-react'
-import { PlacementType, NoteLane, NoteType, SlideNotePos, RangeSelectorOption } from '../../common/enums'
+import { PlacementType, NoteType, RangeSelectorOption } from '../../common/enums'
 import { BoundChartOperation, convertRangeToBeatRange } from '../../common/operations'
 import { OperationWidget } from '../../common/OperationWidget'
 import { Chart } from '../../common/Chart'
