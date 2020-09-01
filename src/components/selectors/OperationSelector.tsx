@@ -9,6 +9,7 @@ import MirrorOperation from '../operation-widgets/MirrorOperation'
 import { popups } from '../../constants/operation-popups'
 import ReverseOperation from '../operation-widgets/ReverseOperation'
 import ConvertToFlickOperation from '../operation-widgets/ConvertToFlickOperation'
+import AdjustInitialBpmOperation from '../operation-widgets/AdjustInitialBpmOperation'
 
 const options = Object.values(Operation).map(operation => {
     return {
@@ -61,6 +62,8 @@ export default class OperationSelector extends React.Component<propsType, stateT
                 return <ReverseOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.ConvertToFlick:
                 return <ConvertToFlickOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.AdjustInitialBpm:
+                return <AdjustInitialBpmOperation updateBoundOperation={this.updateBoundOperation} />
         }
     }
 

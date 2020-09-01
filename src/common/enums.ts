@@ -39,5 +39,6 @@ export enum Operation {
     Copy = 'Copy',
     Mirror = 'Mirror',
     Reverse = 'Reverse',
-    ConvertToFlick = 'Convert To Flick'
+    ConvertToFlick = 'Convert To Flick',
+    AdjustInitialBpm = 'Adjust Initial BPM'
 }

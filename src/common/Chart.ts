@@ -7,6 +7,7 @@ export class Chart {
 
     chartElements: ChartElement[]
     numNotes: number
+    initialBpm: number = 0
 
     constructor(chartElements: ChartElement[]) {
 
@@ -93,6 +94,9 @@ export class Chart {
             } else if (element.type === ChartElementType.System) {
                 let bpmMarker = element as BpmMarker
                 if (bpmMarker.cmd === 'BPM') {
+                    if (!this.initialBpm) {
+                        this.initialBpm = bpmMarker.bpm
+                    }
                     return new BpmMarker(bpmMarker)
                 }
             }
