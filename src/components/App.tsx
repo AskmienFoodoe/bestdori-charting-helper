@@ -26,7 +26,7 @@ class App extends React.Component {
     render() {
         return (
             <>
-                <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingLeft:'150px', paddingRight:'150px', paddingTop:'250px' }} centered>
+                <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingTop:'250px' }} centered>
                     <Grid.Column width={4} style={{minWidth: '250px'}}>
                         <Segment>
                             <h3 style={{textAlign: 'center'}}>Input</h3>
@@ -36,7 +36,7 @@ class App extends React.Component {
                     <Grid.Column width={7} style={{minWidth: '850px'}}>
                         <Segment style={{textAlign: 'center', minWidth: '825px'}}>
                             <h3>Operations</h3>
-                            <div style={{marginBottom: '10px'}}>Note: most operations do not interact with BPM markers</div>
+                            <div style={{marginBottom: '10px'}}>Note: most operations do not interact with BPM markers unless specified.</div>
                             <OperationList onSubmit={this.handleSubmit} />
                         </Segment>
                     </Grid.Column>

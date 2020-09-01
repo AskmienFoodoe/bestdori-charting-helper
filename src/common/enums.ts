@@ -39,4 +39,5 @@ export enum Operation {
     Copy = 'Copy',
     Mirror = 'Mirror',
     Reverse = 'Reverse',
+    ConvertToFlick = 'Convert To Flick'
 }

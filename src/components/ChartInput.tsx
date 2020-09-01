@@ -103,7 +103,7 @@ export default class ChartInput extends React.Component<propsType, stateType> {
             return (
                 <>
                     <Input type='number' label='Chart ID' value={this.state.chartId} onChange={this.handleChartIdChange} onBlur={this.getChartFromApi} style={{ width: '100px' }} />
-                    <Button.Group style={{ marginTop: '10px' }}>
+                    <Button.Group style={{ display: 'block', marginTop: '10px' }}>
                         <Button content='E' difficulty='easy' color={this.state.difficulty === 'easy' ? 'blue' : undefined} onClick={this.handleDifficultyChange} />
                         <Button content='N' difficulty='normal' color={this.state.difficulty === 'normal' ? 'green' : undefined} onClick={this.handleDifficultyChange} />
                         <Button content='H' difficulty='hard' color={this.state.difficulty === 'hard' ? 'yellow' : undefined} onClick={this.handleDifficultyChange} />

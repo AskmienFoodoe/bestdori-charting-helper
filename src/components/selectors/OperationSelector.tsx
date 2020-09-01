@@ -8,8 +8,9 @@ import CopyOperation from '../operation-widgets/CopyOperation'
 import MirrorOperation from '../operation-widgets/MirrorOperation'
 import { popups } from '../../constants/operation-popups'
 import ReverseOperation from '../operation-widgets/ReverseOperation'
+import ConvertToFlickOperation from '../operation-widgets/ConvertToFlickOperation'
 
-const options = Object.keys(Operation).map(operation => {
+const options = Object.values(Operation).map(operation => {
     return {
         key: operation.toLowerCase(),
         text: operation,
@@ -58,6 +59,8 @@ export default class OperationSelector extends React.Component<propsType, stateT
                 return <MirrorOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.Reverse:
                 return <ReverseOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.ConvertToFlick:
+                return <ConvertToFlickOperation updateBoundOperation={this.updateBoundOperation} />
         }
     }
 

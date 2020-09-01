@@ -1,5 +1,5 @@
 import { ChartElement } from "./ChartElement";
-import { ChartElementType, NoteType, PlacementType, SlideNotePos, NoteLane } from "./enums";
+import { ChartElementType, NoteType, PlacementType, SlideNotePos } from "./enums";
 import { Note, SingleNote, SlideNote } from "./notes";
 import { BpmMarker } from "./BpmMarker";
 
