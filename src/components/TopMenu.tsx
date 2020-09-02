@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Sticky, Menu, Icon, Checkbox, CheckboxProps, Modal, Image, Divider } from "semantic-ui-react";
 import { Link, useLocation } from "react-router-dom";
 import LocalStorageContext from "../contexts/LocalStorageContext";
+import { version } from "../../package.json"
 
 export default function TopMenu() {
 
@@ -25,7 +26,7 @@ export default function TopMenu() {
                         <Modal size='small' trigger={
                             <Icon name='info circle' />
                         }>
-                            <Modal.Header>About this App</Modal.Header>
+                            <Modal.Header>About this App (v{version})</Modal.Header>
                             <Modal.Content>
                                 <p>
                                     Make charts at <a href='https://bestdori.com/community/charts' target='_blank' rel="noopener noreferrer">Bestdori</a> and play them with <a href='https://sonolus.com/' target='_blank' rel="noopener noreferrer">Sonolus</a>!
