@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FormEvent } from 'react'
 import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 
 import OperationList from './OperationList'
@@ -22,21 +22,21 @@ class App extends React.Component {
     render() {
         return (
             <>
-                <Grid columns={3} textAlign='center' style={{ height: '100vh', paddingTop:'250px' }} centered>
+                <Grid stackable columns={3} textAlign='center' style={{ height: '100vh', paddingTop:'150px' }} centered>
                     <Grid.Column width={4} style={{minWidth: '250px'}}>
                         <Segment>
                             <h3 style={{textAlign: 'center'}}>Input</h3>
                             <ChartInput />
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width={7} style={{minWidth: '850px'}}>
+                    <Grid.Column width={8} style={{minWidth: '850px'}}>
                         <Segment style={{textAlign: 'center', minWidth: '825px'}}>
                             <h3>Operations</h3>
                             <div style={{marginBottom: '10px'}}>Note: most operations do not interact with BPM markers unless specified.</div>
                             <OperationList onSubmit={this.handleSubmit} />
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width={4} style={{minWidth: '250px'}}>
+                    <Grid.Column width={3} style={{minWidth: '250px'}}>
                         <Segment style={{textAlign: 'center'}}>
                             <h3>Output</h3>
                             <Form>
