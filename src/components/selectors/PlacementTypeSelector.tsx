@@ -41,7 +41,7 @@ export default class PlacementTypeSelector extends React.Component<propsType, st
 
     renderDropdownOptions() {
         return options.map((option) => 
-            <Popup on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
+            <Popup key={option.key} on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
                 <Dropdown.Item {...option} active={this.state.placementType === option.value} onClick={this.handleOptionChange}/>
             } />
         )

@@ -85,7 +85,7 @@ export default class RangeSelector extends React.Component<propsType, stateType 
 
     renderDropdownOptions() {
         return options.map((option) => 
-            <Popup on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
+            <Popup key={option.key} on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
                 <Dropdown.Item {...option} active={this.state.rangeSelectorOption === option.value} onClick={this.handleOptionChange}/>
             } />
         )

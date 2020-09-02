@@ -62,7 +62,7 @@ export default class PositionSelector extends React.Component<propsType, stateTy
 
     renderDropdownOptions() {
         return options.map((option) => 
-            <Popup on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
+            <Popup key={option.key} on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
                 <Dropdown.Item {...option} active={this.state.positionSelectorOption === option.value} onClick={this.handleOptionChange}/>
             } />
         )
