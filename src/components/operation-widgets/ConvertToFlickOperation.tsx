@@ -53,7 +53,8 @@ export default class ConvertToFlickOperation extends React.Component<propsType, 
                     newNote.flick = true
                 } else if (newNote.note === NoteType.Slide && (newNote as SlideNote).end && this.state.checkedBoxes[1]) {
                     newNote.flick = true
-                } else if (this.state.checkedBoxes[2]) {
+                }
+                if (this.state.checkedBoxes[2]) {
                     newNote = new SingleNote(newNote)
                     newNote.flick = true
                 }
