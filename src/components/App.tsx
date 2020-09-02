@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React from 'react'
 import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
 
 import OperationList from './OperationList'
