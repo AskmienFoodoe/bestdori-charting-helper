@@ -14,7 +14,7 @@ interface LocalStorageContextValue {
 export class LocalStorageStore extends React.Component<{}, stateType> {
 
     state = {
-        kokoro: localStorage.getItem('kokoro') ? localStorage.getItem('kokoro') : true
+        kokoro: localStorage.getItem('kokoro') !== null ? localStorage.getItem('kokoro') : true
     }
 
     handleContextChange = (newContext: {[key: string]: any}) => {

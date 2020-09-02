@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Sticky, Menu, Icon, Checkbox, CheckboxProps, Modal, Image } from "semantic-ui-react";
+import { Sticky, Menu, Icon, Checkbox, CheckboxProps, Modal, Image, Divider } from "semantic-ui-react";
 import { Link, useLocation } from "react-router-dom";
 import LocalStorageContext from "../contexts/LocalStorageContext";
 
@@ -30,6 +30,10 @@ export default function TopMenu() {
                                 <p>
                                     Make charts at <a href='https://bestdori.com/community/charts' target='_blank' rel="noopener noreferrer">Bestdori</a> and play them with <a href='https://sonolus.com/' target='_blank' rel="noopener noreferrer">Sonolus</a>!
                                 </p>
+                                <p>
+                                    This app was designed for 1920x1080 display. If any UI elements are going <em style={{fontVariant: 'small-caps'}}>funky time</em>, try zooming out the browser window. <del>also please don't use this app on mobile</del>
+                                </p>
+                                <Divider />
                                 <p>
                                     Developed by <a href='http://bitly.com/98K8eH' target='_blank' rel="noopener noreferrer">AskmienFoodoe<Icon name='github'/></a>
                                 </p>
