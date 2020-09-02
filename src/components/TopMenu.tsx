@@ -17,7 +17,7 @@ export default function TopMenu() {
                         <Checkbox 
                             toggle
                             checked={context.kokoro === 'true'}
-                            label={context.kokoro ? 'Kokoro ❤️' : 'Nokoro 💔'}
+                            label={context.kokoro === 'true' ? 'Kokoro ❤️' : 'Nokoro 💔'}
                             onChange={(event: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {context.handleContextChange({kokoro: `${data.checked}`})}}
                         />
                     </Menu.Item>
