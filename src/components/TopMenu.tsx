@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Sticky, Menu, Icon, Checkbox, CheckboxProps } from "semantic-ui-react";
+import { Sticky, Menu, Icon, Checkbox, CheckboxProps, Modal, Image } from "semantic-ui-react";
 import { Link, useLocation } from "react-router-dom";
 import LocalStorageContext from "../contexts/LocalStorageContext";
 
@@ -22,7 +22,26 @@ export default function TopMenu() {
                         />
                     </Menu.Item>
                     <Menu.Item>
-                        <Icon name='info circle' />
+                        <Modal size='small' trigger={
+                            <Icon name='info circle' />
+                        }>
+                            <Modal.Header>About this App</Modal.Header>
+                            <Modal.Content>
+                                <p>
+                                    Make charts at <a href='https://bestdori.com/community/charts' target='_blank' rel="noopener noreferrer">Bestdori</a> and play them with <a href='https://sonolus.com/' target='_blank' rel="noopener noreferrer">Sonolus</a>!
+                                </p>
+                                <p>
+                                    Developed by <a href='http://bitly.com/98K8eH' target='_blank' rel="noopener noreferrer">AskmienFoodoe<Icon name='github'/></a>
+                                </p>
+                                <p>
+                                    Conversion code from <a href='https://github.com/NonSpicyBurrito/sonolus-bandori-engine' target='_blank' rel="noopener noreferrer">https://github.com/NonSpicyBurrito/sonolus-bandori-engine</a>
+                                </p>
+                                <p>
+                                    Illustration by <a href='https://twitter.com/paiiart' target='_blank' rel="noopener noreferrer">@paiiart<Icon name='twitter'/></a>
+                                </p>
+                                <Image src='/fullversion.png' size='big'/>
+                            </Modal.Content>
+                        </Modal>
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>

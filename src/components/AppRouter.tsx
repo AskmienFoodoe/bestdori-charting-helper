@@ -12,7 +12,7 @@ export default function AppRouter() {
 
     return (
         <BrowserRouter>
-        <div style={{width: '100vw', height: '150px'}}></div>
+        <div style={{width: '100vw', height: '150px', overflow: 'hidden', backgroundImage: 'url("/critical-data.png")', backgroundSize: 'auto 150px'}} />
         <div style={{backgroundImage: context.kokoro ? 'url("/kokoro.png")' : '', backgroundRepeat: 'no-repeat', backgroundSize: '130vw'}}>
           <TopMenu />
           <Route path="/" exact component={App} />
