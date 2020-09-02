@@ -3,18 +3,18 @@ import React from 'react';
 const LocalStorageContext = React.createContext({} as LocalStorageContextValue)
 
 type stateType = {
-    kokoro: boolean | string | null
+    kokoro: string | null
 }
 
 interface LocalStorageContextValue {
-    kokoro: boolean | string | null
+    kokoro: string | null
     handleContextChange: (newContext: {}) => void
 }
 
 export class LocalStorageStore extends React.Component<{}, stateType> {
 
     state = {
-        kokoro: localStorage.getItem('kokoro') !== null ? localStorage.getItem('kokoro') : true
+        kokoro: localStorage.getItem('kokoro') !== null ? localStorage.getItem('kokoro') : 'true'
     }
 
     handleContextChange = (newContext: {[key: string]: any}) => {
