@@ -16,7 +16,7 @@ type stateType = {
     bpm: number
 }
 
-export default class AdjustInitialBpmOperation extends React.Component<propsType, stateType> implements OperationWidget {
+export default class SetInitialBpmOperation extends React.Component<propsType, stateType> implements OperationWidget {
 
     static contextType = ChartContext
     context!: React.ContextType<typeof ChartContext>
@@ -26,7 +26,7 @@ export default class AdjustInitialBpmOperation extends React.Component<propsType
     }
 
     handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-        this.setState({bpm: Math.round(+data.value)})
+        this.setState({ bpm: Math.round(+data.value) })
     }
 
     fixBpm = () => {
@@ -37,9 +37,11 @@ export default class AdjustInitialBpmOperation extends React.Component<propsType
 
     bindOperation = (bpm: number) => {
         return (chart: Chart) => {
-            const bpmMarker = chart.chartElements.find(element => element.type === ChartElementType.System)
+            const bpmMarker = chart.chartElements.find(element => element.type === ChartElementType.System && element.beat === 0)
             if (bpmMarker) {
                 (bpmMarker as BpmMarker).bpm = bpm
+            } else {
+                chart.chartElements.push(new BpmMarker({ bpm, beat: 0 }))
             }
             return chart
         }
