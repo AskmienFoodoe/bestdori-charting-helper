@@ -22,6 +22,7 @@ type stateType = {
     length: number,
     positionState: positionSelectorState,
     placementType: PlacementType,
+    editingPattern: boolean,
     error: boolean
 }
 
@@ -36,6 +37,7 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
             position: 0
         },
         placementType: PlacementType.Place,
+        editingPattern: false,
         error: false
     }
 
@@ -129,7 +131,14 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
         return (
             <Form.Input>
                 <Popup on={['hover']} position='top left' mouseEnterDelay={650} trigger={
-                    <Input style={{ width: '70px' }} value={this.state.pattern} icon={this.state.error ? 'warning circle' : ''} onChange={this.handlePatternChange} />
+                    <Input 
+                        style={{ width: this.state.editingPattern ? '127px' : '70px' }} 
+                        value={this.state.pattern} 
+                        icon={this.state.error ? 'warning circle' : ''} 
+                        onChange={this.handlePatternChange} 
+                        onFocus={(e: Event) => this.setState({editingPattern: true})}
+                        onBlur={(e: Event) => this.setState({editingPattern: false})}
+                    />
                 }>
                     Generates a pattern based on the following rules:
                     <List bulleted>
@@ -147,7 +156,7 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
                         </List.Item>
                     </List>
                 </Popup>
-                <Label style={{ fontSize: '16px' }} basic>per</Label>
+                <Label style={{ fontSize: '16px', display: this.state.editingPattern ? 'none' : undefined }} basic>per</Label>
                 <IntervalSelector onIntervalChange={this.handleIntervalChange} />
                 <Label style={{ fontSize: '16px' }} basic>beats for</Label>
                 <Input style={{ width: '60px' }} value={this.state.length} type='number' min={0} onChange={this.handleLengthChange} />
