@@ -29,8 +29,8 @@ class App extends React.Component {
                             <ChartInput />
                         </Segment>
                     </Grid.Column>
-                    <Grid.Column width={8} style={{minWidth: '850px'}}>
-                        <Segment style={{textAlign: 'center', minWidth: '825px'}}>
+                    <Grid.Column width={8} style={{minWidth: '1025px'}}>
+                        <Segment style={{textAlign: 'center', minWidth: '1000px'}}>
                             <h3>Operations</h3>
                             <div style={{marginBottom: '10px'}}>Note: most operations do not interact with BPM markers unless specified.</div>
                             <OperationList onSubmit={this.handleSubmit} />

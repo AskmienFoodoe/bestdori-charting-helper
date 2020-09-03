@@ -10,6 +10,7 @@ import { popups } from '../../constants/operation-popups'
 import ReverseOperation from '../operation-widgets/ReverseOperation'
 import ConvertToFlickOperation from '../operation-widgets/ConvertToFlickOperation'
 import AdjustInitialBpmOperation from '../operation-widgets/AdjustInitialBpmOperation'
+import GenerateTapPatternOperation from '../operation-widgets/GenerateTapPatternOperation'
 
 const options = Object.values(Operation).map(operation => {
     return {
@@ -64,6 +65,8 @@ export default class OperationSelector extends React.Component<propsType, stateT
                 return <ConvertToFlickOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.AdjustInitialBpm:
                 return <AdjustInitialBpmOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.GenerateTapPattern:
+                return <GenerateTapPatternOperation updateBoundOperation={this.updateBoundOperation} />
         }
     }
 

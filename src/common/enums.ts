@@ -34,11 +34,24 @@ export enum PlacementType {
     Insert = 'Insert'
 }
 
+export enum Interval {
+    Two = 2,
+    One = 1,
+    Half = 1/2,
+    Triplet = 1/3,
+    Quarter = 1/4,
+    Sixth = 1/6,
+    Eighth = 1/8,
+    Twelfth = 1/12,
+    Sixteenth = 1/16
+}
+
 export enum Operation {
     Move = 'Move',
     Copy = 'Copy',
     Mirror = 'Mirror',
     Reverse = 'Reverse',
     ConvertToFlick = 'Convert To Flick',
-    AdjustInitialBpm = 'Adjust Initial BPM'
+    AdjustInitialBpm = 'Adjust Initial BPM',
+    GenerateTapPattern = 'Tap Ptn.'
 }

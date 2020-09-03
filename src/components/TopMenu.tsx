@@ -36,7 +36,7 @@ export default function TopMenu() {
                                 </p>
                                 <Divider />
                                 <p>
-                                    Developed by <a href='http://bitly.com/98K8eH' target='_blank' rel="noopener noreferrer">AskmienFoodoe<Icon name='github'/></a>
+                                    Developed by <a href='https://bit.ly/32QV2fl' target='_blank' rel="noopener noreferrer">AskmienFoodoe<Icon name='github'/></a>
                                 </p>
                                 <p>
                                     Conversion code from <a href='https://github.com/NonSpicyBurrito/sonolus-bandori-engine' target='_blank' rel="noopener noreferrer">https://github.com/NonSpicyBurrito/sonolus-bandori-engine</a>

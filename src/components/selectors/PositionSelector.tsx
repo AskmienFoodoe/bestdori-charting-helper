@@ -16,7 +16,8 @@ const popups: {[key: string]: string} = {
 }
 
 type propsType = {
-    onPositionChange: (state: positionSelectorState) => void
+    onPositionChange: (state: positionSelectorState) => void,
+    excludeRelative?: boolean
 }
 
 type stateType = {
@@ -31,8 +32,8 @@ type positionSelectorState = {
 export default class PositionSelector extends React.Component<propsType, stateType | positionSelectorState> {
 
     state = {
-        positionSelectorOption: PositionSelectorOption.Relative,
-        positionSelectorText: 'ΔBeat',
+        positionSelectorOption: PositionSelectorOption.Note,
+        positionSelectorText: 'Note',
         position: 0
     }
 
@@ -61,11 +62,18 @@ export default class PositionSelector extends React.Component<propsType, stateTy
     }
 
     renderDropdownOptions() {
-        return options.map((option) => 
+        let optionsToUse
+        if (this.props.excludeRelative) {
+            optionsToUse = options.slice(0,2)
+        } else {
+            optionsToUse = options
+        }
+        return optionsToUse.map((option) => 
             <Popup key={option.key} on={['hover']} position='right center' mouseEnterDelay={400} content={popups[option.value]} trigger={
                 <Dropdown.Item {...option} active={this.state.positionSelectorOption === option.value} onClick={this.handleOptionChange}/>
             } />
         )
+        
     }
 
     render() {
