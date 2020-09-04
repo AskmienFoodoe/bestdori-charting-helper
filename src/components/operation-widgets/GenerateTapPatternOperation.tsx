@@ -130,7 +130,7 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
     render() {
         return (
             <Form.Input>
-                <Popup on={['hover']} position='top left' mouseEnterDelay={650} trigger={
+                <Popup on={['hover']} position='top left' mouseEnterDelay={700} trigger={
                     <Input 
                         style={{ width: this.state.editingPattern ? '127px' : '70px' }} 
                         value={this.state.pattern} 
@@ -146,7 +146,12 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
                             Placing the numbers 1-7 puts a note in the respective lane. Use multiple for doubles <del>or triples</del>. <em>Avoid putting the same number twice.</em>
                         </List.Item>
                         <List.Item>
-                            Placing a comma (,) advances the beat based on the interval selected in the dropdown to the right.
+                            Placing a comma (,) advances the beat based on the interval selected in the dropdown to the right. You can place mutiple in succession to create gaps in the pattern.
+                            <List.List>
+                                <List.Item>
+                                    There is an 'implicit' comma at the end of the pattern, e.g. '4' will put a note on every interval, but '4,' will put a note on every other interval.
+                                </List.Item>
+                            </List.List>
                         </List.Item>
                         <List.Item>
                             Placing either 'f' or 's' directly before a number will make that note a flick or skill, respectively.
@@ -160,7 +165,7 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
                 <IntervalSelector onIntervalChange={this.handleIntervalChange} />
                 <Label style={{ fontSize: '16px' }} basic>beats for</Label>
                 <Input style={{ width: '60px' }} value={this.state.length} type='number' min={0} onChange={this.handleLengthChange} />
-                <Label style={{ fontSize: '16px' }} basic>steps &</Label>
+                <Label style={{ fontSize: '16px' }} basic>notes &</Label>
                 <PlacementTypeSelector onPlacementTypeChange={this.handlePlacementTypeChange} />
                 <Label style={{ fontSize: '16px' }} basic>at</Label>
                 <PositionSelector excludeRelative onPositionChange={this.handlePositionChange} />
