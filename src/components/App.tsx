@@ -32,7 +32,8 @@ class App extends React.Component {
                     <Grid.Column width={8} style={{minWidth: '1025px'}}>
                         <Segment style={{textAlign: 'center', minWidth: '1000px'}}>
                             <h3>Operations</h3>
-                            <div style={{marginBottom: '10px'}}>Note: most operations do not interact with BPM markers unless specified.</div>
+                            <div>Note: most operations do not interact with BPM markers unless specified.</div>
+                            <div style={{marginBottom: '10px'}}>Tip: many things have hoverover popups that explain what they do!</div>
                             <OperationList onSubmit={this.handleSubmit} />
                         </Segment>
                     </Grid.Column>

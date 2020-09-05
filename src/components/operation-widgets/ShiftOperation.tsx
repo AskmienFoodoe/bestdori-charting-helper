@@ -92,11 +92,15 @@ export default class ShiftOperation extends React.Component<propsType, stateType
                     onChange={this.handleNumLanesChange}
                 />
                 <Label style={{ fontSize: '16px' }} basic>lanes to the</Label>
-                <Label style={{ fontSize: '16px' }}>
-                    <Dropdown options={options} value={this.state.direction} onChange={this.handleDirectionChange} />
-                </Label>
+                <Popup on={['hover']} position='top center' mouseEnterDelay={600} trigger={
+                    <Label style={{ fontSize: '16px' }}>
+                        <Dropdown options={options} value={this.state.direction} onChange={this.handleDirectionChange} />
+                    </Label>
+                }>
+                    You can also set a negative number of lanes to shift in the opposite direction.
+                </Popup>
                 <Label style={{ fontSize: '16px' }} basic>and</Label>
-                <Popup on={['hover']} position='top center' mouseEnterDelay={500} trigger={
+                <Popup on={['hover']} position='top center' mouseEnterDelay={550} trigger={
                     <Form.Checkbox
                         label='Wrap'
                         checked={this.state.wrap}
