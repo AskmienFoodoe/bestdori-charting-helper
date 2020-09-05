@@ -53,5 +53,7 @@ export enum Operation {
     Reverse = 'Reverse',
     ConvertToFlick = 'Convert To Flick',
     SetInitialBpm = 'Set Initial BPM',
-    GenerateTapPattern = 'Tap Ptn.'
+    GenerateTapPattern = 'Tap Ptn.',
+    GenerateASlidePattern = 'A Slide',
+    GenerateBSlidePattern = 'B Slide',
 }

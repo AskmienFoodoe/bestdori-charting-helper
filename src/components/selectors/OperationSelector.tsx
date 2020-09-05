@@ -3,7 +3,7 @@ import { Dropdown, Label, Form, Popup, DropdownItemProps } from 'semantic-ui-rea
 import { BoundChartOperation } from '../../common/operations'
 import { Chart } from '../../common/Chart'
 import MoveOperation from '../operation-widgets/MoveOperation'
-import { Operation } from '../../common/enums'
+import { Operation, SlideNotePos } from '../../common/enums'
 import CopyOperation from '../operation-widgets/CopyOperation'
 import MirrorOperation from '../operation-widgets/MirrorOperation'
 import { popups } from '../../constants/operation-popups'
@@ -11,6 +11,7 @@ import ReverseOperation from '../operation-widgets/ReverseOperation'
 import ConvertToFlickOperation from '../operation-widgets/ConvertToFlickOperation'
 import SetInitialBpmOperation from '../operation-widgets/SetInitialBpmOperation'
 import GenerateTapPatternOperation from '../operation-widgets/GenerateTapPatternOperation'
+import GenerateSlidePatternOperation from '../operation-widgets/GenerateSlidePatternOperation'
 
 const options = Object.values(Operation).map(operation => {
     return {
@@ -67,6 +68,10 @@ export default class OperationSelector extends React.Component<propsType, stateT
                 return <SetInitialBpmOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.GenerateTapPattern:
                 return <GenerateTapPatternOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.GenerateASlidePattern:
+                return <GenerateSlidePatternOperation updateBoundOperation={this.updateBoundOperation} pos={SlideNotePos.A} />
+            case Operation.GenerateBSlidePattern:
+                return <GenerateSlidePatternOperation updateBoundOperation={this.updateBoundOperation} pos={SlideNotePos.B} />
         }
     }
 

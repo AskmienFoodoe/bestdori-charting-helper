@@ -8,4 +8,6 @@ export const popups: {[key: string]: string} = {
     [Operation.ConvertToFlick]: 'Converts non-flicks in the selected range into flicks.',
     [Operation.SetInitialBpm]: 'You could just do this in the editor, but why not do it here?',
     [Operation.GenerateTapPattern]: 'Generates a pattern of tap notes and places them in the chart.',
+    [Operation.GenerateASlidePattern]: 'Generates a pattern of Type-A slide notes and places them in the chart.',
+    [Operation.GenerateBSlidePattern]: 'Generates a pattern of Type-B slide notes and places them in the chart.',
 }

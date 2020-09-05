@@ -11,7 +11,7 @@ const options = [
 const popups: {[key: string]: string} = {
     [PlacementType.Place]: `Places notes alongside existing notes.`,
     [PlacementType.Replace]: `Erases any existing notes that would overlap, before placing notes.`,
-    [PlacementType.Insert]: `Pushes existing notes forward before placing notes.`,
+    [PlacementType.Insert]: `Pushes existing notes AND BPM MARKERS forward before placing notes.`,
 }
 
 type propsType = {
