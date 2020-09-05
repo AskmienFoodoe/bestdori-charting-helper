@@ -31,7 +31,7 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
     state = {
         pattern: '',
         interval: Interval.Quarter,
-        length: 0,
+        length: 1,
         positionState: {
             positionSelectorOption: PositionSelectorOption.Note,
             position: 0
@@ -50,7 +50,7 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
     }
 
     handleLengthChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-        this.setState({ length: Math.round(+data.value) })
+        this.setState({ length: Math.max(Math.round(+data.value), 1) })
     }
 
     handlePlacementTypeChange = (placementType: PlacementType) => {
@@ -130,13 +130,13 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
         return (
             <Form.Input>
                 <Popup on={['hover']} position='top left' mouseEnterDelay={700} trigger={
-                    <Input 
-                        style={{ width: this.state.editingPattern ? '127px' : '70px' }} 
-                        value={this.state.pattern} 
-                        icon={this.state.error ? 'warning circle' : ''} 
-                        onChange={this.handlePatternChange} 
-                        onFocus={(e: Event) => this.setState({editingPattern: true})}
-                        onBlur={(e: Event) => this.setState({editingPattern: false})}
+                    <Input
+                        style={{ width: this.state.editingPattern ? '127px' : '70px' }}
+                        value={this.state.pattern}
+                        icon={this.state.error ? 'warning circle' : ''}
+                        onChange={this.handlePatternChange}
+                        onFocus={(e: Event) => this.setState({ editingPattern: true })}
+                        onBlur={(e: Event) => this.setState({ editingPattern: false })}
                     />
                 }>
                     Generates a pattern based on the following rules:

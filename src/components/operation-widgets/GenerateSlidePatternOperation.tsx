@@ -32,7 +32,7 @@ export default class GenerateSlidePatternOperation extends React.Component<props
     state = {
         pattern: '',
         interval: Interval.Quarter,
-        length: 0,
+        length: 2,
         positionState: {
             positionSelectorOption: PositionSelectorOption.Note,
             position: 0
@@ -51,7 +51,7 @@ export default class GenerateSlidePatternOperation extends React.Component<props
     }
 
     handleLengthChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-        this.setState({ length: Math.round(+data.value) })
+        this.setState({ length: Math.max(Math.round(+data.value), 2) })
     }
 
     handlePlacementTypeChange = (placementType: PlacementType) => {
@@ -108,7 +108,7 @@ export default class GenerateSlidePatternOperation extends React.Component<props
             for (let i = 0; i < length; i++) {
                 const newNote = new SlideNote(notePattern[i % notePattern.length])
                 newNote.beat += offset * Math.floor(i / notePattern.length)
-                if (i === 0 || notesExcerpt[i-1].end === true) {
+                if (i === 0 || notesExcerpt[i - 1].end === true) {
                     newNote.start = true
                 } else if (i === length - 1) {
                     newNote.end = true
@@ -138,13 +138,13 @@ export default class GenerateSlidePatternOperation extends React.Component<props
         return (
             <Form.Input>
                 <Popup on={['hover']} position='top left' mouseEnterDelay={700} trigger={
-                    <Input 
-                        style={{ width: this.state.editingPattern ? '127px' : '70px' }} 
-                        value={this.state.pattern} 
-                        icon={this.state.error ? 'warning circle' : ''} 
-                        onChange={this.handlePatternChange} 
-                        onFocus={(e: Event) => this.setState({editingPattern: true})}
-                        onBlur={(e: Event) => this.setState({editingPattern: false})}
+                    <Input
+                        style={{ width: this.state.editingPattern ? '127px' : '70px' }}
+                        value={this.state.pattern}
+                        icon={this.state.error ? 'warning circle' : ''}
+                        onChange={this.handlePatternChange}
+                        onFocus={(e: Event) => this.setState({ editingPattern: true })}
+                        onBlur={(e: Event) => this.setState({ editingPattern: false })}
                     />
                 }>
                     Generates a pattern based on the following rules:

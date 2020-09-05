@@ -90,6 +90,7 @@ export default class PositionSelector extends React.Component<propsType, stateTy
                     style={{ width: '80px' }}
                     type='number'
                     min={this.state.positionSelectorOption === PositionSelectorOption.Relative ? undefined : 0}
+                    step={this.state.positionSelectorOption === PositionSelectorOption.Note ? 1 : 0.25}
                     value={this.state.position}
                     onChange={this.handlePositionChange}
                 />
