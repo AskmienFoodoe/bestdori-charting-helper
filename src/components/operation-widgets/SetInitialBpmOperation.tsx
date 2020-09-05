@@ -22,7 +22,7 @@ export default class SetInitialBpmOperation extends React.Component<propsType, s
     context!: React.ContextType<typeof ChartContext>
 
     state = {
-        bpm: 1
+        bpm: 0
     }
 
     handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -48,7 +48,8 @@ export default class SetInitialBpmOperation extends React.Component<propsType, s
     }
 
     componentDidMount() {
-        this.setState({ bpm: this.context.chart.initialBpm })
+        const initialBpm = this.context.chart.initialBpm
+        this.setState({ bpm: initialBpm ? initialBpm : 1  })
     }
 
     componentDidUpdate(prevProps: propsType, prevState: stateType) {
@@ -64,7 +65,6 @@ export default class SetInitialBpmOperation extends React.Component<propsType, s
                 <Input
                     style={{ width: '80px' }}
                     type='number'
-                    start={0}
                     min={0}
                     value={this.state.bpm}
                     onChange={this.handleBpmChange}

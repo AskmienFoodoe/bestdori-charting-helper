@@ -11,7 +11,9 @@ const options = [
     { key: 'sixth', text: '1/6', value: Interval.Sixth },
     { key: 'eighth', text: '1/8', value: Interval.Eighth },
     { key: 'twelfth', text: '1/12', value: Interval.Twelfth },
-    { key: 'sixteenth', text: '1/16', value: Interval.Sixteenth }
+    { key: 'sixteenth', text: '1/16', value: Interval.Sixteenth },
+    { key: 'twentyfourth', text: '1/24', value: Interval.Twentyfourth },
+    { key: 'thirtysecond', text: '1/32', value: Interval.Thirtysecond }
 ]
 
 type propsType = {

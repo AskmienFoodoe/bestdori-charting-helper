@@ -43,7 +43,9 @@ export enum Interval {
     Sixth = 1/6,
     Eighth = 1/8,
     Twelfth = 1/12,
-    Sixteenth = 1/16
+    Sixteenth = 1/16,
+    Twentyfourth = 1/24,
+    Thirtysecond = 1/32,
 }
 
 export enum Operation {

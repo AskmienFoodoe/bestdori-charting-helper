@@ -50,7 +50,7 @@ export default class RangeSelector extends React.Component<propsType, stateType 
         if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
             startValue = Math.floor(startValue)
         }
-        this.setState({ start: startValue })
+        this.setState({ start: Math.max(startValue, 0) })
     }
 
     handleEndChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -58,7 +58,7 @@ export default class RangeSelector extends React.Component<propsType, stateType 
         if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
             endValue = Math.floor(endValue)
         }
-        this.setState({ end: endValue })
+        this.setState({ end: Math.max(endValue, 0) })
     }
 
     fixEndtoStart = () => {
@@ -115,6 +115,7 @@ export default class RangeSelector extends React.Component<propsType, stateType 
                     style={{ width: '80px' }}
                     type='number'
                     start={0}
+                    min={0}
                     value={this.state.end}
                     onChange={this.handleEndChange}
                     onBlur={this.fixStarttoEnd}
