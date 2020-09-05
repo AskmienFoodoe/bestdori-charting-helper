@@ -12,6 +12,7 @@ import ConvertToFlickOperation from '../operation-widgets/ConvertToFlickOperatio
 import SetInitialBpmOperation from '../operation-widgets/SetInitialBpmOperation'
 import GenerateTapPatternOperation from '../operation-widgets/GenerateTapPatternOperation'
 import GenerateSlidePatternOperation from '../operation-widgets/GenerateSlidePatternOperation'
+import ShiftOperation from '../operation-widgets/ShiftOperation'
 
 const options = Object.values(Operation).map(operation => {
     return {
@@ -62,6 +63,8 @@ export default class OperationSelector extends React.Component<propsType, stateT
                 return <MirrorOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.Reverse:
                 return <ReverseOperation updateBoundOperation={this.updateBoundOperation} />
+            case Operation.Shift:
+                return <ShiftOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.ConvertToFlick:
                 return <ConvertToFlickOperation updateBoundOperation={this.updateBoundOperation} />
             case Operation.SetInitialBpm:

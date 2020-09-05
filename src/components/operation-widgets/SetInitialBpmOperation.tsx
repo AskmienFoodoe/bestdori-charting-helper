@@ -26,7 +26,7 @@ export default class SetInitialBpmOperation extends React.Component<propsType, s
     }
 
     handleBpmChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-        this.setState({ bpm: Math.round(+data.value) })
+        this.setState({ bpm: Math.floor(+data.value) })
     }
 
     fixBpm = () => {

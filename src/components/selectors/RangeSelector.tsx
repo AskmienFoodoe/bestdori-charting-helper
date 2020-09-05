@@ -48,7 +48,7 @@ export default class RangeSelector extends React.Component<propsType, stateType 
     handleStartChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
         let startValue = +data.value
         if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
-            startValue = Math.round(startValue)
+            startValue = Math.floor(startValue)
         }
         this.setState({ start: startValue })
     }
@@ -56,7 +56,7 @@ export default class RangeSelector extends React.Component<propsType, stateType 
     handleEndChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
         let endValue = +data.value
         if (this.state.rangeSelectorOption === RangeSelectorOption.Note) {
-            endValue = Math.round(endValue)
+            endValue = Math.floor(endValue)
         }
         this.setState({ end: endValue })
     }

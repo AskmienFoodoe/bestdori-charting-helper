@@ -50,7 +50,7 @@ export default class GenerateTapPatternOperation extends React.Component<propsTy
     }
 
     handleLengthChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
-        this.setState({ length: Math.max(Math.round(+data.value), 1) })
+        this.setState({ length: Math.max(Math.floor(+data.value), 1) })
     }
 
     handlePlacementTypeChange = (placementType: PlacementType) => {

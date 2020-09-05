@@ -50,7 +50,7 @@ export default class PositionSelector extends React.Component<propsType, stateTy
     handlePositionChange = (event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
         let newPosition = +data.value
         if (this.state.positionSelectorOption === PositionSelectorOption.Note) {
-            newPosition = Math.round(newPosition)
+            newPosition = Math.floor(newPosition)
         }
         this.setState({ position: newPosition })
     }

@@ -51,6 +51,7 @@ export enum Operation {
     Copy = 'Copy',
     Mirror = 'Mirror',
     Reverse = 'Reverse',
+    Shift = 'Shift',
     ConvertToFlick = 'Convert To Flick',
     SetInitialBpm = 'Set Initial BPM',
     GenerateTapPattern = 'Tap Ptn.',
