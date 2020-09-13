@@ -21,6 +21,13 @@
         "def": 0
     },
     {
+        "name": "#JUDGMENT_STRICT",
+        "scope": "Bandori",
+        "standard": true,
+        "type": "toggle",
+        "def": 0
+    },
+    {
         "name": "#OFFSET_AUDIO",
         "type": "slider",
         "def": 0,

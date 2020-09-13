@@ -1,6 +1,6 @@
 //
 // Bandori Engine
-// For Sonolus 0.4.4
+// For Sonolus 0.4.6
 //
 // A recreation of BanG Dream! Girls Band Party engine
 // By Burrito
@@ -504,6 +504,109 @@ InputOffset:Add(DeviceInputOffset Divide(LevelInputOffset 1000))
     SetShifted(LevelUI *UIScoreValue *UIHeight 0.15)
     SetShifted(LevelUI *UIScoreValue *UIAlpha 1)
     SetShifted(LevelUI *UIScoreValue *UIHorizontalAlign 1)
+
+    SetShifted(LevelUI *UILifeBar *UIAnchorX Subtract(AspectRatio 0.25))
+    SetShifted(LevelUI *UILifeBar *UIAnchorY 0.95)
+    SetShifted(LevelUI *UILifeBar *UIPivotX 1)
+    SetShifted(LevelUI *UILifeBar *UIPivotY 1)
+    SetShifted(LevelUI *UILifeBar *UIWidth 0.55)
+    SetShifted(LevelUI *UILifeBar *UIHeight 0.15)
+    SetShifted(LevelUI *UILifeBar *UIAlpha 1)
+    SetShifted(LevelUI *UILifeBar *UIHorizontalAlign -1)
+    SetShifted(LevelUI *UILifeBar *UIBackground true)
+
+    SetShifted(LevelUI *UILifeValue *UIAnchorX Subtract(AspectRatio 0.25))
+    SetShifted(LevelUI *UILifeValue *UIAnchorY 0.95)
+    SetShifted(LevelUI *UILifeValue *UIPivotX 1)
+    SetShifted(LevelUI *UILifeValue *UIPivotY 1)
+    SetShifted(LevelUI *UILifeValue *UIWidth 0.4)
+    SetShifted(LevelUI *UILifeValue *UIHeight 0.15)
+    SetShifted(LevelUI *UILifeValue *UIAlpha 1)
+    SetShifted(LevelUI *UILifeValue *UIHorizontalAlign 1)
+
+    Set(LevelBucket 0 -50)
+    Set(LevelBucket 1 50)
+    Set(LevelBucket 2 -100)
+    Set(LevelBucket 3 100)
+    Set(LevelBucket 4 -150)
+    Set(LevelBucket 5 150)
+
+    Set(LevelBucket 6 -50)
+    Set(LevelBucket 7 50)
+    Set(LevelBucket 8 -100)
+    Set(LevelBucket 9 100)
+    Set(LevelBucket 10 -150)
+    Set(LevelBucket 11 150)
+
+    Set(LevelBucket 12 -50)
+    Set(LevelBucket 13 50)
+    Set(LevelBucket 14 -100)
+    Set(LevelBucket 15 100)
+    Set(LevelBucket 16 -150)
+    Set(LevelBucket 17 150)
+
+    If(
+        StrictJudgment
+        Execute(
+            Set(LevelBucket 18 0)
+            Set(LevelBucket 19 50)
+            Set(LevelBucket 20 0)
+            Set(LevelBucket 21 100)
+            Set(LevelBucket 22 0)
+            Set(LevelBucket 23 150)
+
+            Set(LevelBucket 24 -50)
+            Set(LevelBucket 25 50)
+            Set(LevelBucket 26 -100)
+            Set(LevelBucket 27 100)
+            Set(LevelBucket 28 -150)
+            Set(LevelBucket 29 150)
+
+            Set(LevelBucket 30 0)
+            Set(LevelBucket 31 50)
+            Set(LevelBucket 32 0)
+            Set(LevelBucket 33 100)
+            Set(LevelBucket 34 0)
+            Set(LevelBucket 35 150)
+        )
+        Execute(
+            Set(LevelBucket 18 0)
+            Set(LevelBucket 19 200)
+            Set(LevelBucket 20 0)
+            Set(LevelBucket 21 200)
+            Set(LevelBucket 22 0)
+            Set(LevelBucket 23 200)
+
+            Set(LevelBucket 24 -50)
+            Set(LevelBucket 25 200)
+            Set(LevelBucket 26 -100)
+            Set(LevelBucket 27 200)
+            Set(LevelBucket 28 -150)
+            Set(LevelBucket 29 200)
+
+            Set(LevelBucket 30 0)
+            Set(LevelBucket 31 200)
+            Set(LevelBucket 32 0)
+            Set(LevelBucket 33 200)
+            Set(LevelBucket 34 0)
+            Set(LevelBucket 35 200)
+        )
+    )
+
+    Set(LevelScore *PerfectScoreMultiplier 1)
+    Set(LevelScore *GreatScoreMultiplier 0.8)
+    Set(LevelScore *GoodScoreMultiplier 0.5)
+
+    SetShifted(LevelScore *ConsecutiveGreatScore *ConsecutiveScoreMultiplier 0.01)
+    SetShifted(LevelScore *ConsecutiveGreatScore *ConsecutiveScoreStep 100)
+    SetShifted(LevelScore *ConsecutiveGreatScore *ConsecutiveScoreCap 1000)
+
+    SetShifted(ArchetypeLife Multiply(2 4) *MissLifeIncrement -100)
+    SetShifted(ArchetypeLife Multiply(3 4) *MissLifeIncrement -100)
+    SetShifted(ArchetypeLife Multiply(4 4) *MissLifeIncrement -100)
+    SetShifted(ArchetypeLife Multiply(5 4) *MissLifeIncrement -20)
+    SetShifted(ArchetypeLife Multiply(6 4) *MissLifeIncrement -100)
+    SetShifted(ArchetypeLife Multiply(7 4) *MissLifeIncrement -100)
 )
 
 #0.spawnOrder:-1000
@@ -853,7 +956,13 @@ StageCoverY:Lerp(LaneY2 LaneY1 StageCover)
                     Execute(
                         Set(EntityMemory *InputState Terminated)
                         Set(EntitySharedMemory *InputSuccess true)
-                        Set(EntityInput *Judgment JudgeSimple(Subtract(Time InputOffset) NoteTailTime PerfectWindow GreatWindow GoodWindow))
+                        Set(EntityInput *Judgment
+                            If(
+                                StrictJudgment
+                                JudgeSimple(Subtract(Time InputOffset) NoteTailTime PerfectWindow GreatWindow GoodWindow)
+                                Judge(Subtract(Time InputOffset) NoteTailTime PerfectWindowNegative SlideWindow GreatWindowNegative SlideWindow GoodWindowNegative SlideWindow)
+                            )
+                        )
                         Set(EntityInput *Bucket NoteBucket)
                         Set(EntityInput *BucketValue Multiply(1000 Subtract(Time InputOffset NoteTailTime)))
                         PlayLaneEffect
@@ -878,14 +987,14 @@ StageCoverY:Lerp(LaneY2 LaneY1 StageCover)
         And(
             Not(Auto)
             Not(InputState)
-            Greater(Subtract(NoteHeadTimeDistance InputOffset) GoodWindow)
+            Greater(Subtract(NoteHeadTimeDistance InputOffset) If(StrictJudgment GoodWindow SlideWindow))
         )
         And(
             Equal(InputState Terminated)
             DestroyHoldEffect
         )
         And(
-            Greater(Subtract(NoteTailTimeDistance InputOffset) GoodWindow)
+            Greater(Subtract(NoteTailTimeDistance InputOffset) If(StrictJudgment GoodWindow SlideWindow))
             DestroyHoldEffect
         )
         Execute(
@@ -934,7 +1043,13 @@ StageCoverY:Lerp(LaneY2 LaneY1 StageCover)
                     Execute(
                         Set(EntityMemory *InputState Terminated)
                         Set(EntitySharedMemory *InputSuccess true)
-                        Set(EntityInput *Judgment JudgeSimple(Subtract(TempTouchT InputOffset) NoteTailTime PerfectWindow GreatWindow GoodWindow))
+                        Set(EntityInput *Judgment
+                            If(
+                                StrictJudgment
+                                JudgeSimple(Subtract(TempTouchT InputOffset) NoteTailTime PerfectWindow GreatWindow GoodWindow)
+                                Judge(Subtract(TempTouchT InputOffset) NoteTailTime PerfectWindowNegative SlideWindow GreatWindowNegative SlideWindow GoodWindowNegative SlideWindow)
+                            )
+                        )
                         Set(EntityInput *Bucket NoteBucket)
                         Set(EntityInput *BucketValue Multiply(1000 Subtract(TempTouchT InputOffset NoteTailTime)))
                         PlayLaneEffect
@@ -959,14 +1074,14 @@ StageCoverY:Lerp(LaneY2 LaneY1 StageCover)
         And(
             Not(Auto)
             Not(InputState)
-            Greater(Subtract(NoteHeadTimeDistance InputOffset) GoodWindow)
+            Greater(Subtract(NoteHeadTimeDistance InputOffset) If(StrictJudgment GoodWindow SlideWindow))
         )
         And(
             Equal(InputState Terminated)
             DestroyHoldEffect
         )
         And(
-            Greater(Subtract(NoteTailTimeDistance InputOffset) GoodWindow)
+            Greater(Subtract(NoteTailTimeDistance InputOffset) If(StrictJudgment GoodWindow SlideWindow))
             DestroyHoldEffect
         )
         Execute(
@@ -1020,7 +1135,13 @@ StageCoverY:Lerp(LaneY2 LaneY1 StageCover)
                     Execute(
                         Set(EntityMemory *InputState Terminated)
                         Set(EntitySharedMemory *InputSuccess true)
-                        Set(EntityInput *Judgment JudgeSimple(Subtract(Time InputOffset) NoteTailTime PerfectWindow GreatWindow GoodWindow))
+                        Set(EntityInput *Judgment
+                            If(
+                                StrictJudgment
+                                JudgeSimple(Subtract(Time InputOffset) NoteTailTime PerfectWindow GreatWindow GoodWindow)
+                                Judge(Subtract(Time InputOffset) NoteTailTime PerfectWindowNegative SlideWindow GreatWindowNegative SlideWindow GoodWindowNegative SlideWindow)
+                            )
+                        )
                         Set(EntityInput *Bucket NoteBucket)
                         Set(EntityInput *BucketValue Multiply(1000 Subtract(Time InputOffset NoteTailTime)))
                         PlayLaneEffect
@@ -1045,14 +1166,14 @@ StageCoverY:Lerp(LaneY2 LaneY1 StageCover)
         And(
             Not(Auto)
             Not(InputState)
-            Greater(Subtract(NoteHeadTimeDistance InputOffset) GoodWindow)
+            Greater(Subtract(NoteHeadTimeDistance InputOffset) If(StrictJudgment GoodWindow SlideWindow))
         )
         And(
             Equal(InputState Terminated)
             DestroyHoldEffect
         )
         And(
-            Greater(Subtract(NoteTailTimeDistance InputOffset) GoodWindow)
+            Greater(Subtract(NoteTailTimeDistance InputOffset) If(StrictJudgment GoodWindow SlideWindow))
             DestroyHoldEffect
         )
         Execute(
@@ -1260,6 +1381,10 @@ PhaseEnded:4
 PerfectWindow:0.05
 GreatWindow:0.1
 GoodWindow:0.15
+PerfectWindowNegative:Multiply(-1 PerfectWindow)
+GreatWindowNegative:Multiply(-1 GreatWindow)
+GoodWindowNegative:Multiply(-1 GoodWindow)
+SlideWindow:0.2
 
 JudgeYMax:0
 MinVR:1.5
@@ -1330,6 +1455,9 @@ LevelOption:2
 LevelTransform:3
 LevelBackground:4
 LevelUI:5
+LevelBucket:6
+LevelScore:7
+LevelLife:8
 
 EntityInfoArray:10
 EntityDataArray:11
@@ -1340,6 +1468,8 @@ EntityMemory:21
 EntityData:22
 EntityInput:23
 EntitySharedMemory:24
+
+ArchetypeLife:30
 
 TemporaryMemory:100
 TemporaryData:101
@@ -1394,30 +1524,32 @@ DeviceInputOffset:Get(LevelData *DeviceInputOffset)
 *Auto:0
 *NoteRandom:1
 *NoteSpeedRandom:2
-*LevelAudioOffset:3
-*LevelInputOffset:4
-*Speed:5
-*NoteSpeed:6
-*NoteSize:7
-*NoteEffectSize:8
-*ConnectorAlpha:9
-*StageCover:10
-*Mirror:11
-*SimLine:12
-*SoundEffect:13
-*NoteEffect:14
-*LaneEffect:15
-*SlotEffect:16
-*StageTilt:17
-*StageAspectRatioLock:18
-*UIJudgmentSize:19
-*UIJudgmentAlpha:20
-*UIComboSize:21
-*UIComboAlpha:22
+*StrictJudgment:3
+*LevelAudioOffset:4
+*LevelInputOffset:5
+*Speed:6
+*NoteSpeed:7
+*NoteSize:8
+*NoteEffectSize:9
+*ConnectorAlpha:10
+*StageCover:11
+*Mirror:12
+*SimLine:13
+*SoundEffect:14
+*NoteEffect:15
+*LaneEffect:16
+*SlotEffect:17
+*StageTilt:18
+*StageAspectRatioLock:19
+*UIJudgmentSize:20
+*UIJudgmentAlpha:21
+*UIComboSize:22
+*UIComboAlpha:23
 
 Auto:Get(LevelOption *Auto)
 NoteRandom:Get(LevelOption *NoteRandom)
 NoteSpeedRandom:Get(LevelOption *NoteSpeedRandom)
+StrictJudgment:Get(LevelOption *StrictJudgment)
 LevelAudioOffset:Get(LevelOption *LevelAudioOffset)
 LevelInputOffset:Get(LevelOption *LevelInputOffset)
 Speed:Get(LevelOption *Speed)
@@ -1449,6 +1581,8 @@ UIComboAlpha:Get(LevelOption *UIComboAlpha)
 *UIComboText:33
 *UIScoreBar:44
 *UIScoreValue:55
+*UILifeBar:66
+*UILifeValue:77
 
 *UIAnchorX:0
 *UIAnchorY:1
@@ -1461,6 +1595,42 @@ UIComboAlpha:Get(LevelOption *UIComboAlpha)
 *UIHorizontalAlign:8
 *UIVerticalAlign:9
 *UIBackground:10
+
+
+
+// Level Score Layout
+
+*PerfectScoreMultiplier:0
+*GreatScoreMultiplier:1
+*GoodScoreMultiplier:2
+
+*ConsecutivePerfectScore:3
+*ConsecutiveGreatScore:6
+*ConsecutiveGoodScore:9
+
+*ConsecutiveScoreMultiplier:0
+*ConsecutiveScoreStep:1
+*ConsecutiveScoreCap:2
+
+
+
+// Level Life Layout
+
+*ConsecutivePerfectLife:0
+*ConsecutiveGreatLife:2
+*ConsecutiveGoodLife:4
+
+*ConsecutiveLifeIncrement:0
+*ConsecutiveLifeStep:1
+
+
+
+// Archetype Life Layout
+
+*PerfectLifeIncrement:0
+*GreatLifeIncrement:1
+*GoodLifeIncrement:2
+*MissLifeIncrement:3
 
 
 
