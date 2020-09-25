@@ -1,3 +1,5 @@
+export const script = 
+`
 //
 // Bandori Engine
 // For Sonolus 0.4.6
@@ -6,8 +8,8 @@
 // By Burrito
 //
 
-export const script = 
-`
+
+
 // Note Class
 
 PreprocessNote:Execute(
@@ -65,18 +67,9 @@ PreprocessNote:Execute(
     Set(EntityData *NoteTailX Multiply(LaneWidth NoteTailLane))
     Set(EntityData *NoteTailX1 Subtract(NoteTailX HalfNoteWidth))
     Set(EntityData *NoteTailX2 Add(NoteTailX HalfNoteWidth))
-    Set(EntityData *NoteTailSpeedMultiplier
-        If(
-            NoteSpeedRandom
-            If(
-                RandomInteger(0 2)
-                Random(1 2)
-                Divide(1 Random(1 2))
-            )
-            1
-        )
-    )
+    Set(EntityData *NoteTailSpeedMultiplier If(NoteSpeedRandom Random(1 2) 1))
     Set(EntityData *NoteTailSpawnTime Subtract(NoteTailTime Multiply(NoteScreenTime NoteTailSpeedMultiplier)))
+    Set(EntityData *NoteZ Subtract(LayerNoteBody Divide(NoteTailTime 1000)))
 )
 
 SpawnOrderHead:NoteHeadSpawnTime
@@ -178,7 +171,7 @@ DrawNoteTail:Execute(
         Multiply(NoteTailScale2 NoteTailX1) NoteTailY2
         Multiply(NoteTailScale2 NoteTailX2) NoteTailY2
         Multiply(NoteTailScale1 NoteTailX2) NoteTailY1
-        LayerNoteBody
+        NoteZ
         1
     )
 )
@@ -1800,6 +1793,7 @@ NoteHeadHoldEffectCID:GetShifted(EntitySharedMemoryArray NoteHeadSharedMemoryOff
 *NoteTailSpeedMultiplier:19
 *NoteTailSpawnTime:20
 *NoteTailOriginalLane:21
+*NoteZ:22
 
 NoteHeadIndex:Get(EntityData *NoteHeadIndex)
 NoteTailTime:Get(EntityData *NoteTailTime)
@@ -1814,6 +1808,7 @@ NoteTailX2:Get(EntityData *NoteTailX2)
 NoteTailSpeedMultiplier:Get(EntityData *NoteTailSpeedMultiplier)
 NoteTailSpawnTime:Get(EntityData *NoteTailSpawnTime)
 NoteTailOriginalLane:Get(EntityData *NoteTailOriginalLane)
+NoteZ:Get(EntityData *NoteZ)
 
 NoteHeadInfoOffset:Multiply(NoteHeadIndex 3)
 NoteHeadDataOffset:Multiply(NoteHeadIndex 32)
