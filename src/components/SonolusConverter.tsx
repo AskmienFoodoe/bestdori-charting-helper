@@ -1,11 +1,9 @@
 import React from "react";
+import axios from "axios";
 import ChartContext from "../contexts/ChartContext";
 import { Chart } from "../common/Chart";
 import { Form, Grid, Segment, TextArea, Icon, Button, ButtonProps } from "semantic-ui-react";
-import options from '../constants/sonolus/options.json'
 import { bpmToSeconds, convert } from '../common/sonolus/bestdori-conversion-tools'
-import levelScript from '../constants/sonolus/script.json'
-import { script } from '../constants/sonolus/script'
 import { compile } from '../common/sonolus/compiler'
 
 export default class SonolusConverter extends React.Component {
@@ -15,7 +13,10 @@ export default class SonolusConverter extends React.Component {
     state = {
         inputChart: '',
         level: '',
+        script: '',
+        levelScript: '',
         options: '',
+        displayOptions: ''
     }
 
     handleInputChange = (event: Event, { value }: { value: string }) => {
@@ -30,19 +31,27 @@ export default class SonolusConverter extends React.Component {
 
     handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, data: ButtonProps) => {
         try {
+            const { script, levelScript, options } = this.state
             const entities = convert(bpmToSeconds(this.context.chart.chartElements))
             const level = compile(script, levelScript, entities)
-            this.setState({ level: JSON.stringify(level), options: JSON.stringify(options) })
+            this.setState({ level: JSON.stringify(level), displayOptions: JSON.stringify(options) })
         } catch(err) {
             console.log(err)
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const chartElements = this.context.chart.chartElements
         if (chartElements.length) {
             this.setState({inputChart: JSON.stringify(this.context.chart.chartElements)})
         }
+
+        const engineClient = axios.create({ baseURL: 'https://raw.githubusercontent.com/NonSpicyBurrito/sonolus-bandori-engine/master'})
+        this.setState({
+            script: (await engineClient.get('/script.txt')).data,
+            levelScript: (await engineClient.get('/script.json')).data,
+            options: (await engineClient.get('/options.json')).data
+        })
     }
 
     render() {
@@ -86,7 +95,7 @@ export default class SonolusConverter extends React.Component {
                                 style={{ minHeight: '400px' }}
                                 control={TextArea}
                                 readOnly
-                                value={this.state.options}
+                                value={this.state.displayOptions}
                                 placeholder='options.json appears here!'
                             />
                         </Segment>
