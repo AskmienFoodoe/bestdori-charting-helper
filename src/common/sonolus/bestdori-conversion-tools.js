@@ -32,15 +32,22 @@ export const convert = notes => {
                     note.head = findSlidePrev(notes, note, index)
                 }
                 break
-            default:
-                break
         }
     })
 
     const getFreedom = note => 3 - Math.abs(note.lane - 4)
     notes.sort((a, b) => a.time - b.time || getFreedom(a) - getFreedom(b))
 
-    let slides = []
+    const slides = notes
+        .filter(note => note.head)
+        .map(note => {
+            return {
+                start: note.head.time,
+                end: note.time,
+                head: note.head,
+            }
+        })
+
     notes.forEach((note, index) => {
         note.index = index + 2
         note.lane -= 4
@@ -54,34 +61,15 @@ export const convert = notes => {
             case 'Slide':
                 note.archetype = note.start ? 3 : note.end ? (note.flick ? 7 : 6) : 5
                 break
-            default:
-                break
-        }
-
-        switch (note.archetype) {
-            case 3:
-                slides.push([note.index])
-                break
-            case 5:
-                slides.find(slide => slide.includes(note.head.index)).push(note.index)
-                break
-            case 6:
-            case 7:
-                slides = slides.filter(slide => !slide.includes(note.head.index))
-                break
-            default:
-                break
         }
 
         if (notes[index - 1] && notes[index - 1].time === note.time) {
-            note.ref = notes[index - 1].index
+            note.ref = notes[index - 1]
         } else {
             if (!notes[index + 1] || notes[index + 1].time !== note.time) {
-                const slide = slides.find(
-                    slide => !slide.includes(note.index) && (!note.head || !slide.includes(note.head.index))
-                )
+                const slide = slides.find(slide => note.time > slide.start && note.time < slide.end)
                 if (slide) {
-                    note.ref = slide[slide.length - 1]
+                    note.ref = slide.head
                 }
             }
         }
@@ -100,7 +88,7 @@ export const convert = notes => {
         data.values.push(note.time)
         data.values.push(note.lane)
         if (note.ref) {
-            data.values.push(note.ref)
+            data.values.push(note.ref.index)
         }
         return {
             archetype: note.archetype,
